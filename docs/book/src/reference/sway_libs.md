@@ -1,42 +1,42 @@
 # Sway Libraries
 
-The purpose of Sway Libraries is to contain libraries which users can import and use that are not part of the standard library.
+Sway Libraries 的目的是包含用户可以导入并使用的库，这些库不是标准库的一部分。
 
-These libraries contain helper functions and other tools valuable to blockchain development.
+这些库包含了对区块链开发有价值的辅助函数和其他工具。
 
-For more information on how to use a Sway-Libs library, please refer to the [Sway-Libs Book](https://fuellabs.github.io/sway-libs/book/getting_started/index.html).
+有关如何使用 Sway-Libs 库的更多信息，请参阅 [Sway-Libs 书籍](https://fuellabs.github.io/sway-libs/book/getting_started/index.html)。
 
-## Assets Libraries
+## 资产库
 
-Asset Libraries are any libraries that use [Native Assets](../blockchain-development/native_assets.md) on the Fuel Network.
+资产库是任何使用[本地资产](../blockchain-development/native_assets.md)在 Fuel Network 上的库。
 
-- [Asset Library](https://fuellabs.github.io/sway-libs/book/asset/index.html); provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
+- [资产库](https://fuellabs.github.io/sway-libs/book/asset/index.html); 提供了 [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)、[SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 和 [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 标准的辅助函数。
 
-## Access Control and Security Libraries
+## 访问控制和安全库
 
-Access Control and Security Libraries are any libraries that are built and intended to provide additional safety when developing smart contracts.
+访问控制和安全库是任何旨在在开发智能合约时提供额外安全性的库。
 
-- [Ownership Library](https://fuellabs.github.io/sway-libs/book/ownership/index.html); used to apply restrictions on functions such that only a **single** user may call them. This library provides helper functions for the [SRC-5; Ownership Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md).
-- [Admin Library](https://fuellabs.github.io/sway-libs/book/admin/index.html); used to apply restrictions on functions such that only a select few users may call them like a whitelist.
-- [Pausable Library](https://fuellabs.github.io/sway-libs/book/pausable/index.html); allows contracts to implement an emergency stop mechanism.
-- [Reentrancy Guard Library](https://fuellabs.github.io/sway-libs/book/reentrancy/index.html); used to detect and prevent reentrancy attacks.
+- [所有权库](https://fuellabs.github.io/sway-libs/book/ownership/index.html); 用于对函数应用限制，使只有**单个**用户可以调用它们。此库为 [SRC-5; 拥有权标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) 提供了辅助函数。
+- [管理员库](https://fuellabs.github.io/sway-libs/book/admin/index.html); 用于对函数应用限制，使只有少数几个用户可以调用它们，类似于白名单。
+- [暂停库](https://fuellabs.github.io/sway-libs/book/pausable/index.html); 允许合约实现紧急停止机制。
+- [重入防护库](https://fuellabs.github.io/sway-libs/book/reentrancy/index.html); 用于检测和防止重入攻击。
 
-## Cryptography Libraries
+## 密码学库
 
-Cryptography Libraries are any libraries that provided cryptographic functionality beyond what the std-lib provides.
+密码学库是提供了超出 std-lib 范围的密码学功能的库。
 
-- [Bytecode Library](https://fuellabs.github.io/sway-libs/book/bytecode/index.html); used for on-chain verification and computation of bytecode roots for contracts and predicates.
-- [Merkle Proof Library](https://fuellabs.github.io/sway-libs/book/merkle/index.html); used to verify Binary Merkle Trees computed off-chain.
+- [字节码库](https://fuellabs.github.io/sway-libs/book/bytecode/index.html); 用于在链上验证和计算合约和谓词的字节码根。
+- [默克尔证明库](https://fuellabs.github.io/sway-libs/book/merkle/index.html); 用于验证链下计算的二进制默克尔树。
 
-## Math Libraries
+## 数学库
 
-Math Libraries are libraries which provide mathematic functions or number types that are outside of the std-lib's scope.
+数学库是提供了超出 std-lib 范围的数学函数或数字类型的库。
 
-- [Fixed Point Number Library](https://fuellabs.github.io/sway-libs/book/fixed_point/index.html); an interface to implement fixed-point numbers.
-- [Signed Integers Library](https://fuellabs.github.io/sway-libs/book/signed_integers/index.html); an interface to implement signed integers.
+- [固定点数库](https://fuellabs.github.io/sway-libs/book/fixed_point/index.html); 用于实现固定点数的接口。
+- [有符号整数库](https://fuellabs.github.io/sway-libs/book/signed_integers/index.html); 用于实现有符号整数的接口。
 
-## Data Structures Libraries
+## 数据结构库
 
-Data Structure Libraries are libraries which provide complex data structures which unlock additional functionality for Smart Contracts.
+数据结构库提供了复杂的数据结构，为智能合约解锁了额外的功能。
 
-- [Queue Library](https://fuellabs.github.io/sway-libs/book/queue/index.html); a linear data structure that provides First-In-First-Out (FIFO) operations.
+- [队列库](https://fuellabs.github.io/sway-libs/book/queue/index.html); 一个线性数据结构，提供先进先出 (FIFO) 操作。

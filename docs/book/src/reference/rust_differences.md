@@ -1,10 +1,10 @@
-# Differences From Rust
+# 与 Rust 的不同之处
 
-Sway shares a lot with Rust, especially its syntax. Because they are so similar, you may be surprised or caught off guard when they differ. This page serves to outline, from a high level, some of the syntactic _gotchas_ that you may encounter.
+Sway 与 Rust 有很多相似之处，尤其是其语法。因为它们如此相似，当它们有所不同时，您可能会感到惊讶或措手不及。本页面旨在从高层次上概述您可能会遇到的一些语法“坑”。
 
-## Enum Variant Syntax
+## 枚举变体语法
 
-In Rust, enums generally take one of three forms: _unit_ variants, which have no inner data, _struct_ variants, which contain named fields, and _tuple_ variants, which contain within them a tuple of data. If you are unfamiliar with these terms, this is what they look like:
+在 Rust 中，枚举通常采用三种形式之一：_unit_ 变体，没有内部数据，_struct_ 变体，包含命名字段，以及 _tuple_ 变体，其中包含一个元组数据。如果您对这些术语不熟悉，这是它们的样子：
 
 ```rust,ignore
 // note to those skimming the docs: this is Rust syntax! Not Sway! Don't copy/paste this into a Sway program.
@@ -19,7 +19,7 @@ enum Foo {
 }
 ```
 
-In Sway, enums are simplified. Enums variants must all specify exactly one type. This type represents their interior data. This is actually isomorphic to what Rust offers, but with a different syntax. You can see the above enum but with Sway syntax below:
+在 Sway 中，枚举被简化了。枚举变体必须全部指定精确的一个类型。这个类型表示它们的内部数据。实际上，这与 Rust 提供的内容是同构的，但语法不同。您可以在下面看到具有 Sway 语法的上述枚举：
 
 ```sway
 // This is equivalent Sway syntax for the above Rust enum.

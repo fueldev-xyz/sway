@@ -1,45 +1,40 @@
-# Keywords
+# 关键字
 
-The following list contains keywords that are reserved for current or
-future use by the Sway language. As such, they cannot be used as
-identifiers. Identifiers are names of functions, variables,
-parameters, modules, constants, attributes, types or
-traits, etc.
+以下列表包含 Sway 语言当前或将来保留用于当前或将来使用的关键字。因此，它们不能用作标识符。标识符是函数、变量、参数、模块、常量、属性、类型或特征等的名称。
 
-## Keywords Currently in Use
+## 当前正在使用的关键字
 
-The following is a list of keywords currently in use, with their
-functionality described.
+以下是当前正在使用的关键字列表，附有其功能描述。
 
-- `as` - rename items in `use` statements, e.g., `use type::a as alias_name`
-- [`abi`](../sway-program-types/smart_contracts.md#the-abi-declaration) - defines a smart contract ABI in a syntactically similar way to traits
-- [`break`](../basics/control_flow.md#break-and-continue) - exit a loop immediately
-- [`const`](../basics/constants.md) - define constant items
-- [`continue`](../basics/control_flow.md#break-and-continue) - continue to the next loop iteration
-- `else` - used in conjunction with `if` conditions for control flow constructs
-- [`enum`](../basics/structs_tuples_and_enums.md#enums) - define an enumeration
-- `false` - Boolean false literal
-- [`fn`](../basics/functions.md)- define a function or the function pointer type
-- [`if`](../basics/control_flow.md#if-expressions) - branch based on the result of a conditional expression
-- `impl` - implement inherent or trait functionality
-- `let` - bind a variable
-- [`match`](../basics/control_flow.md#match-expressions) - exhaustively match a value to patterns
-- `mod` - define a module
-- `mut` - denote mutability in references, or pattern bindings
-- `pub` - denote public visibility of Sway data structures, traits, or modules
-- `ref` - bind by reference
-- `return` - return early from a function
-- `Self` - a type alias for the type we are defining or implementing
-- `self` - method subject
-- [`struct`](../basics/structs_tuples_and_enums.md#structs) - define a structure
-- [`trait`](../advanced/traits.md#declaring-a-trait) - define a trait
-- `true` - Boolean true literal
-- [`type`](../advanced/advanced_types.md#creating-type-synonyms-with-type-aliases) - define a type alias or associated type
-- `use` - bring symbols into scope
-- `where` - specifies traits for generic types
-- [`while`](../basics/control_flow.md#while) - loop conditionally based on the result of an expression
+- `as` - 重命名 `use` 语句中的项目，例如，`use type::a as alias_name`
+- [`abi`](../sway-program-types/smart_contracts.md#the-abi-declaration) - 以与特征类似的语法定义智能合约 ABI
+- [`break`](../basics/control_flow.md#break-and-continue) - 立即退出循环
+- [`const`](../basics/constants.md) - 定义常量项
+- [`continue`](../basics/control_flow.md#break-and-continue) - 继续下一个循环迭代
+- `else` - 与 `if` 条件结构一起使用的控制流构造
+- [`enum`](../basics/structs_tuples_and_enums.md#enums) - 定义枚举
+- `false` - 布尔假文字
+- [`fn`](../basics/functions.md)- 定义函数或函数指针类型
+- [`if`](../basics/control_flow.md#if-expressions) - 根据条件表达式的结果进行分支
+- `impl` - 实现固有或特征功能
+- `let` - 绑定变量
+- [`match`](../basics/control_flow.md#match-expressions) - 对值进行模式匹配
+- `mod` - 定义一个模块
+- `mut` - 在引用或模式绑定中表示可变性
+- `pub` - 表示 Sway 数据结构、特征或模块的公共可见性
+- `ref` - 按引用绑定
+- `return` - 从函数中提前返回
+- `Self` - 我们正在定义或实现的类型的类型别名
+- `self` - 方法主体
+- [`struct`](../basics/structs_tuples_and_enums.md#structs) - 定义一个结构
+- [`trait`](../advanced/traits.md#declaring-a-trait) - 定义一个特征
+- `true` - 布尔真文字
+- [`type`](../advanced/advanced_types.md#creating-type-synonyms-with-type-aliases) - 定义类型别名或关联类型
+- `use` - 将符号引入作用域
+- `where` - 为泛型类型指定特征
+- [`while`](../basics/control_flow.md#while) - 根据表达式的结果进行条件循环
 
-## Keywords Reserved for Possible Future Use
+## 保留以供将来使用的关键字
 
 - `abstract`
 - `async`
@@ -65,25 +60,25 @@ functionality described.
 - `virtual`
 - `yield`
 
-## Special Keywords
+## 特殊关键字
 
-### Program Keywords
+### 程序关键字
 
-Keywords associated with defining the type of Sway program to compile
+与定义要编译的 Sway 程序类型相关的关键字
 
-- [`contract`](../sway-program-types/smart_contracts.md) - analogous to a deployed API with some database state
-- [`library`](../sway-program-types/libraries.md) - Sway code that defines new common behavior
-- [`predicate`](../sway-program-types/predicates.md) - programs that return a Boolean value and which represent ownership of some resource upon execution to true
-- [`script`](../sway-program-types/scripts.md) - a runnable bytecode on the chain, which executes once to perform a task
+- [`contract`](../sway-program-types/smart_contracts.md) - 类似于具有某些数据库状态的已部署 API
+- [`library`](../sway-program-types/libraries.md) - 定义新的常见行为的 Sway 代码
+- [`predicate`](../sway-program-types/predicates.md) - 返回布尔值的程序，执行时代表对某些资源的所有权为 true
+- [`script`](../sway-program-types/scripts.md) - 在链上可运行的字节码，执行一次以执行任务
 
-### Attribute Keywords
+### 属性关键字
 
-Keywords associated with defining the functionality of attributes
+与定义属性功能相关的关键字
 
-- [`allow`](./attributes.md#allow) - overrides checks that would otherwise result in errors or warnings
-- [`doc`](./attributes.md#doc) - specifies documentation
-- [`inline`](./attributes.md#inline) - suggests that a copy of the attributed function should be placed in the caller, rather than generating code to call the function where it is defined
-- [`payable`](./attributes.md#payable) - implies method is payable for compile time
-- [`storage`](./attributes.md#storage) - declaration that contains a list of stored variables
-- [`test`](./attributes.md#test) - marks a function to be executed as a test
-- [`deprecated`](./attributes.md#deprecated) - marks an item as deprecated
+- [`allow`](./attributes.md#allow) - 覆盖否则会导致错误或警告的检查
+- [`doc`](./attributes.md#doc) - 指定文档
+- [`inline`](./attributes.md#inline) - 建议将标记的函数的副本放置在调用者中，而不是在定义函数的地方生成调用函数的代码
+- [`payable`](./attributes.md#payable) - 暗示方法是可付款的，用于编译时
+- [`storage`](./attributes.md#storage) - 包含一组存储变量的声明
+- [`test`](./attributes.md#test) - 将一个函数标记为要执行的测试
+- [`deprecated`](./attributes.md#deprecated) - 将一个项标记为已弃用

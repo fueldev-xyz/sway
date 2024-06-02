@@ -1,8 +1,10 @@
-# Style Guide
+# 风格指南
 
-## Capitalization
+## 大小写
 
-<!-- This section should explain the capitalization style guide -->
+<!-- 本部分应解释大写规范 -->
 <!-- cap:example:start -->
-In Sway, structs, traits, and enums are `CapitalCase`. Modules, variables, and functions are `snake_case`, constants are `SCREAMING_SNAKE_CASE`. The compiler will warn you if your capitalization is ever unidiomatic.
+
+在 Sway 中，结构体、特征和枚举使用 `CapitalCase`。模块、变量和函数使用 `snake_case`，常量使用 `SCREAMING_SNAKE_CASE`。如果您的大小写不符合惯例，编译器会发出警告。
+
 <!-- cap:example:end -->
