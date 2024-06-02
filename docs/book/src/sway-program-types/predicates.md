@@ -1,40 +1,40 @@
-# Predicates
+# 断言
 
-From the perspective of Sway, predicates are programs that return a Boolean value and which represent ownership of some resource upon execution to true. They have no access to contract storage. Here is a trivial predicate, which always evaluates to true:
+从 Sway 的角度来看，断言是返回布尔值的程序，表示在执行时对某些资源的所有权为 true。它们无法访问合约存储。以下是一个微不足道的断言，它始终计算为 true：
 
 ```sway
 predicate;
 
-// All predicates require a main function which returns a Boolean value.
+// 所有断言都需要一个返回布尔值的主函数。
 fn main() -> bool {
-    true
+true
 }
 ```
 
-The address of this predicate is `0xd19a5fe4cb9baf41ad9813f1a6fef551107c8e8e3f499a6e32bccbb954a74764`. Any assets sent to this address can be unlocked or claimed by executing the predicate above as it always evaluates to true.
+该断言的地址为 `0xd19a5fe4cb9baf41ad9813f1a6fef551107c8e8e3f499a6e32bccbb954a74764`。向该地址发送的任何资产都可以通过执行上述断言来解锁或索取，因为它总是计算为 true。
 
-It does not need to be deployed to a blockchain because it only exists during a transaction. That being said, the predicate address is on-chain as the owner of one or more UTXOs.
+它不需要部署到区块链，因为它只存在于交易期间。尽管如此，断言地址在链上作为一个或多个 UTXO 的所有者存在。
 
-## Transfer Coins to a Predicate
+## 将硬币转移到断言
 
-In Fuel, coins can be sent to a predicate's address(the bytecode root, calculated [here](https://github.com/FuelLabs/fuel-specs/blob/master/src/identifiers/predicate-id.md)).
+在 Fuel 中，硬币可以发送到断言的地址（计算出的字节码根，[在此处计算](https://github.com/FuelLabs/fuel-specs/blob/master/src/identifiers/predicate-id.md)）。
 
-## Spending Predicate Coins
+## 消费断言硬币
 
-The coin UTXOs become spendable not on the provision of a valid signature, but rather if the supplied predicate both has a root that matches their owner, and [evaluates](https://github.com/FuelLabs/fuel-specs/blob/master/src/fuel-vm/index.md#predicate-verification) to `true`.
+硬币 UTXO 变得可消费，并不是基于提供有效签名，而是如果提供的断言既具有与其所有者匹配的根，又 [评估为](https://github.com/FuelLabs/fuel-specs/blob/master/src/fuel-vm/index.md#predicate-verification) `true`。
 
-If a predicate reverts, or tries to access impure VM opcodes, the evaluation is automatically `false`.
+如果一个断言回滚，或尝试访问不纯的 VM 操作码，则评估自动为 `false`。
 
-An analogy for predicates is rather than a traditional 12 or 24 word seed phrase that generates a private key and creates a valid signature, a predicate's code can be viewed as the private key. Anyone with the code may execute a predicate, but only when the predicate evaluates to true may the assets owned by that address be released.
+对于断言的类比是，与其传统的生成私钥并创建有效签名的 12 或 24 个字的种子短语不同，断言的代码可以被视为私钥。任何拥有该代码的人都可以执行一个断言，但只有当断言评估为 true 时，该地址拥有的资产才能被释放。
 
-## Spending Conditions
+## 消费条件
 
-Predicates may introspect the transaction spending their coins (inputs, outputs, script bytecode, etc.) and may take runtime arguments, either or both of which may affect the evaluation of the predicate.
+断言可以检查消费其硬币的交易（输入、输出、脚本字节码等），并可以接受运行时参数，其中任一或两者可能会影响断言的评估。
 
-It is important to note that predicates cannot read or write memory. They may however check the inputs and outputs of a transaction. For example in the [OTC Predicate Swap Example](https://github.com/FuelLabs/sway-applications/tree/master/OTC-swap-predicate), a user may specify they would like to swap `asset1` for `asset2` and with amount of `5`. The user would then send `asset1` to the predicate. Only when the predicate can verify that the outputs include `5` coins of `asset2` being sent to the original user, may `asset1` be transferred out of the predicate.
+重要的是要注意，断言无法读取或写入内存。但它们可以检查交易的输入和输出。例如，在 [OTC 断言交换示例](https://github.com/FuelLabs/sway-applications/tree/master/OTC-swap-predicate) 中，用户可以指定他们想要用 `asset1` 交换 `asset2`，并且数量为 `5`。然后用户将 `asset1` 发送到断言。只有当断言能够验证输出包括将 `5` 枚 `asset2` 发送给原始用户时，才能将 `asset1` 从断言中转出。
 
-## Debugging Predicates
+## 调试断言
 
-Because they don't have any side effects (they are _pure_), predicates cannot create receipts. Therefore, they cannot have logging or create a stack backtrace. This means that there is no native way to debug them aside from using a single-stepping debugger.
+因为它们没有任何副作用（它们是 _pure_ 的），断言无法创建收据。因此，它们无法进行日志记录或创建堆栈回溯。这意味着除了使用单步调试器之外，没有本地调试它们的方法。
 
-As a workaround, the predicate can be written, tested, and debugged first as a `script`, and then changed back into a `predicate`.
+作为一种解决方法，断言可以首先编写、测试和调试为 `script`，然后再更改为 `predicate`。

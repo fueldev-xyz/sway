@@ -1,19 +1,19 @@
-# Scripts
+# 脚本(Scripts)
 
-A script is runnable bytecode on the chain which executes once to perform some task. It does not represent ownership of any resources and it cannot be called by a contract. A script can return a single value of any type.
+脚本是在链上可运行的字节码，它执行一次以执行某些任务。它不代表任何资源的所有权，也不能被合约调用。脚本可以返回任意类型的单个值。
 
-Scripts are state-aware in that while they have no persistent storage (because they only exist during the transaction) they can call contracts and act based upon the returned values and results.
+脚本是状态感知的，因为虽然它们没有持久性存储（因为它们只存在于交易期间），但它们可以调用合约并根据返回的值和结果执行操作。
 
-This example script calls a contract:
+以下是一个调用合约的示例脚本：
 
 ```sway
 {{#include ../../../../examples/wallet_contract_caller_script/src/main.sw}}
 ```
 
-Scripts, similar to predicates, rely on a `main()` function as an entry point. You can call other functions defined in a script from the `main()` function or call another contract via an [ABI cast](./smart_contracts.md#calling-a-smart-contract-from-a-script).
+类似于断言，脚本依赖于一个 `main()` 函数作为入口点。您可以从 `main()` 函数中调用脚本中定义的其他函数，或通过 [ABI 转换](./smart_contracts.md#calling-a-smart-contract-from-a-script) 调用另一个合约。
 
-An example use case for a script would be a router that trades funds through multiple decentralized exchanges to get the price for the input asset, or a script to re-adjust a Collateralized Debt Position via a flash loan.
+脚本的一个示例用例是通过多个去中心化交易所交易资金以获取输入资产价格的路由器，或者通过闪电贷重新调整抵押债务头寸的脚本。
 
-## Scripts and the SDKs
+## 脚本和 SDK
 
-Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts. The Rust and TypeScript SDKs provide functions to call contract methods as if they were calling contracts directly. Under the hood, the SDKs wrap all contract calls with scripts that contain minimal code to simply make the call and forward script data as call parameters.
+与可以直接调用合约的 EVM 交易不同（但只能调用单个合约），Fuel 交易执行一个脚本，该脚本可能调用零个或多个合约。Rust 和 TypeScript SDK 提供了调用合约方法的函数，就像直接调用合约一样。在底层，SDK 将所有合约调用包装在脚本中，该脚本包含最小的代码，只需进行调用并将脚本数据作为调用参数转发。

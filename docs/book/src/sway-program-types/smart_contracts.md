@@ -1,102 +1,97 @@
-# What is a Smart Contract?
+# 什么是智能合约？
 
-<!-- This section should explain what is a smart contract -->
-<!-- contract:example:start -->
-A smart contract is no different than a script or predicate in that it is a piece of bytecode that is deployed to the blockchain via a [transaction](https://fuellabs.github.io/fuel-specs/master/protocol/tx_format). The main features of a smart contract that differentiate it from scripts or predicates are that it is _callable_ and _stateful_. Put another way, a smart contract is analogous to a deployed API with some database state.
-<!-- contract:example:end -->
+智能合约与脚本或断言没有区别，它是一段字节码，通过[交易](https://fuellabs.github.io/fuel-specs/master/protocol/tx_format)部署到区块链上。智能合约与脚本或断言的主要特点是它可以被调用且具有状态。换句话说，智能合约类似于部署了一些数据库状态的 API。
 
-The interface of a smart contract, also just called a contract, must be defined strictly with an [ABI declaration](#the-abi-declaration). See [this contract](../examples/wallet_smart_contract.md) for an example.
+智能合约的接口，也称为合约，必须严格地使用 [ABI 声明](#the-abi-declaration) 定义。查看[此合约](../examples/wallet_smart_contract.md)以获取示例。
 
-## Syntax of a Smart Contract
+## 智能合约的语法
 
-As with any Sway program, the program starts with a declaration of what [program type](./index.md) it is. A contract must also either define or import an [ABI declaration](#the-abi-declaration) and implement it.
+与任何 Sway 程序一样，程序始于声明其[程序类型](./index.md)。合约必须定义或导入一个[ABI 声明](#the-abi-declaration)并实现它。
 
-<!-- This section should explain best practices for ABIs -->
-<!-- ABI:example:start -->
-It is considered good practice to define your ABI in a separate library and import it into your contract. This allows callers of your contract to simply import the ABI directly and use it in their scripts to call your contract.
-<!-- ABI:example:end -->
+**ABI 最佳实践**
 
-Let's take a look at an ABI declaration in a library:
+在单独的库中定义 ABI 并将其导入到合约中被认为是一个良好的做法。这样，调用方只需直接导入 ABI，并在其脚本中使用它来调用您的合约。
 
-```sway
-{{#include ../../../../examples/wallet_abi/src/main.sw:abi_library}}
-```
+让我们来看一个库中的 ABI 声明：
 
-Let's focus on the ABI declaration and inspect it line-by-line.
+\```sway
+{{\#include ../../../../examples/wallet_abi/src/main.sw:abi_library}}
+\```
+
+让我们专注于 ABI 声明并逐行检查它。
 
 ### The ABI Declaration
 
-```sway
-{{#include ../../../../examples/wallet_abi/src/main.sw:abi}}
-```
+\```sway
+{{\#include ../../../../examples/wallet_abi/src/main.sw:abi}}
+\```
 
 ---
 
-In the first line, `abi Wallet {`, we declare the name of this _Application Binary Interface_, or ABI. We are naming this ABI `Wallet`. To import this ABI into either a script for calling or a contract for implementing, you would use
+在第一行中，\`abi Wallet {\`，我们声明这个*应用程序二进制接口*（ABI）的名称。我们将这个 ABI 命名为 `Wallet`。要将此 ABI 导入到脚本以进行调用或导入到合约以进行实现，您将使用
 
-```sway
-{{#include ../../../../examples/wallet_smart_contract/src/main.sw:abi_import}}
-```
-
----
-
-In the second line,
-
-```sway
-{{#include ../../../../examples/wallet_abi/src/main.sw:receive_funds}}
-```
-
-we are declaring an ABI method called `receive_funds` which, when called, should receive funds into this wallet. Note that we are simply defining an interface here, so there is no _function body_ or implementation of the function. We only need to define the interface itself. In this way, ABI declarations are similar to [trait declarations](../advanced/traits.md). This particular ABI method does not take any parameters.
+\```sway
+{{\#include ../../../../examples/wallet_smart_contract/src/main.sw:abi_import}}
+\```
 
 ---
 
-In the third line,
+在第二行中，
 
-```sway
+\```sway
+{{\#include ../../../../examples/wallet_abi/src/main.sw:receive_funds}}
+\```
+
+我们声明了一个名为`receive_funds`的 ABI 方法，当调用时，应该将资金存入这个钱包。请注意，我们在这里只是定义了一个接口，所以没有函数体或函数的实现。我们只需要定义接口本身。这种方式，ABI 声明类似于[特征声明](../advanced/traits.md)。这个特定的 ABI 方法不接受任何参数。
+
+---
+
+在第三行中，
+
+\```sway
 {{#include ../../../../examples/wallet_abi/src/main.sw:send_funds}}
-```
+\```
 
-we are declaring another ABI method, this time called `send_funds`. It takes two parameters: the amount to send, and the address to send the funds to.
+我们声明了另一个 ABI 方法，这次称为`send_funds`。它接受两个参数：要发送的金额和要发送资金的地址。
 
->**Note**: The ABI methods `receive_funds` and `send_funds` also require the annotation `#[storage(read, write)]` because their implementations require reading and writing a storage variable that keeps track of the wallet balance, as we will see shortly. Refer to [Purity](
-../blockchain-development/purity.md#Purity) for more information on storage annotations.
+> **注意**: ABI 方法`receive_funds`和`send_funds`还需要注释`#[storage(read, write)]`，因为它们的实现需要读取和写入跟踪钱包余额的存储变量。有关存储注释的更多信息，请参见[Purity](../blockchain-development/purity.md#Purity)。
 
-## Implementing an ABI for a Smart Contract
+## 为智能合约实现 ABI
 
-Now that we've discussed how to define the interface, let's discuss how to use it. We will start by implementing the above ABI for a specific contract.
+既然我们讨论了如何定义接口，让我们讨论如何使用它。我们将从为特定合约实现上述 ABI 开始。
 
-Implementing an ABI for a contract is accomplished with `impl <ABI name> for Contract` syntax. The `for Contract` syntax can only be used to implement an ABI for a contract; implementing methods for a struct should use `impl Foo` syntax.
+通过`impl <ABI名称> for Contract`语法实现合约的 ABI。`for Contract`语法只能用于实现合约的 ABI；为结构体实现方法应该使用`impl Foo`语法。
 
-```sway
+\```sway
 {{#include ../../../../examples/wallet_smart_contract/src/main.sw:abi_impl}}
-```
+\```
 
-You may notice once again the similarities between [traits](../advanced/traits.md) and ABIs. And, indeed, as a bonus, you can define methods in addition to the interface surface of an ABI, just like a trait. These pre-implemented ABI methods automatically become available as part of the contract interface that implements the corresponding ABI.
+您可能再次注意到[特征](../advanced/traits.md)和 ABI 之间的相似之处。而且，作为额外的奖励，您可以定义除了 ABI 接口表面之外的方法，就像特征一样。这些预实现的 ABI 方法自动成为实现相应 ABI 的合约接口的一部分。
 
-Note that the above implementation of the ABI follows the [Checks, Effects, Interactions](https://docs.soliditylang.org/en/v0.6.11/security-considerations.html#re-entrancy) pattern.
+请注意，上述 ABI 的实现遵循[Checks, Effects, Interactions](https://docs.soliditylang.org/en/v0.6.11/security-considerations.html#re-entrancy)模式。
 
-## The `ContractId` type
+## `ContractId`类型
 
-Contracts have an associated `ContractId` type in Sway. The `ContractId` type allows for Sway programs to refer to contracts in the Sway language. Please refer to the [ContractId](../basics/blockchain_types.md#contractid-type) section of the book for more information on `ContractId`s.
+合约在 Sway 中有一个关联的`ContractId`类型。`ContractId`类型允许 Sway 程序在 Sway 语言中引用合约。有关`ContractId`的更多信息，请参见书中的[ContractId](../basics/blockchain_types.md#contractid-type)部分。
 
-## Calling a Smart Contract from a Script
+## 从脚本调用智能合约
 
->**Note**: In most cases, calling a contract should be done from the [Rust SDK](../testing/testing-with-rust.md) or the [TypeScript SDK](https://docs.fuel.network/docs/fuels-ts) which provide a more ergonomic UI for interacting with a contract. However, there are situations where manually writing a script to call a contract is required.
+> **注意**: 在大多数情况下，调用合约应该使用[Rust SDK](../testing/testing-with-rust.md)或[TypeScript SDK](https://docs.fuel.network/docs/fuels-ts)，因为它们为与合约交互提供了更人性化的界面。然而，有些情况下需要手动编写脚本来调用合约。
 
-Now that we have defined our interface and implemented it for our contract, we need to know how to actually _call_ our contract. Let's take a look at a contract call:
+既然我们已经为合约定义了接口并实现了它，我们需要知道如何实际*调用*我们的合约。让我们看一下合约调用：
 
-```sway
+\```sway
 {{#include ../../../../examples/wallet_contract_caller_script/src/main.sw}}
-```
+\```
 
-The main new concept is the `abi cast`: `abi(AbiName, contract_address)`. This returns a `ContractCaller` type which can be used to call contracts. The methods of the ABI become the methods available on this contract caller: `send_funds` and `receive_funds`. We then directly call the contract ABI method as if it was just a regular method. You also have the option of specifying the following special parameters inside curly braces right before the main list of parameters:
+主要的新概念是`abi cast`: `abi(AbiName, contract_address)`。这返回一个`ContractCaller`类型，可用于调用合约。ABI 的方法成为此合约调用者可用的方法：`send_funds`和`receive_funds`。然后我们直接调用合约 ABI 方法，就像它是常规方法一样。您还可以在主参数列表之前在花括号中指定以下特殊参数：
 
-1. `gas`: a `u64` that represents the gas being forwarded to the contract when it is called.
-2. `coins`: a `u64` that represents how many coins are being forwarded with this call.
-3. `asset_id`: a `b256` that represents the ID of the _asset type_ of the coins being forwarded.
+1. `gas`: 一个`u64`，表示调用合约时转发的 gas。
+2. `coins`: 一个`u64`，表示此调用中转发的硬币数量。
+3. `asset_id`: 一个`b256`，表示转发的硬币的*资产类型*的 ID。
 
-Each special parameter is optional and assumes a default value when skipped:
+每个特殊参数都是可选的，如果省略，则假定默认值：
 
-1. The default value for `gas` is the context gas (i.e. the content of the special register `$cgas`). Refer to the [FuelVM specifications](https://fuellabs.github.io/fuel-specs/master/vm) for more information about context gas.
-2. The default value for `coins` is 0.
-3. The default value for `asset_id` is `b256::zero()`.
+1. `gas`的默认值是上下文 gas（即特殊寄存器 `$cgas` 中的内容）。有关上下文 gas 的更多信息，请参阅[FuelVM 规范](https://fuellabs.github.io/fuel-specs/master/vm)。
+2. `coins`的默认值为 0。
+3. `asset_id`的默认值是`b256::zero()`。

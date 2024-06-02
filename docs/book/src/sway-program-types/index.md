@@ -1,19 +1,16 @@
-# Sway Program Types
+# Sway 程序类型
 
-<!-- This section should explain program types -->
-<!-- programs:example:start -->
-A Sway program itself has a type: it is either a _contract_, a _predicate_, a _script_, or a _library_. The first three of these things are all deployable to the blockchain. A _library_ is simply a project designed for code reuse and is never directly deployed to the chain.
+Sway 程序本身具有类型：它可以是 _合约_、_断言_、_脚本_ 或 _库_。这些中的前三个都可以部署到区块链上。 _库_ 只是一个旨在实现代码重用的项目，永远不会直接部署到链上。
 
-Every Sway file _must_ begin with a declaration of what type of program it is. A project can have many libraries within it, but only one contract, script, or predicate. Scripts and predicates require `main` functions to serve as entry points, while contracts instead publish an ABI. This chapter will go into detail about all of these various types of programs and what purposes they serve.
-<!-- programs:example:end -->
+每个 Sway 文件 _必须_ 以声明其程序类型开始。一个项目可以包含多个库，但只能有一个合约、脚本或断言。脚本和断言需要 `main` 函数作为入口点，而合约则会发布一个 ABI。本章将详细介绍所有这些不同类型的程序及其用途。
 
-Contracts are used primarily for protocols or systems that operate within a fixed set of rules. A good example would be a staking contract or a decentralized exchange (also called a DEX).
+合约主要用于在固定的一组规则内运行的协议或系统。一个很好的例子是质押合约或去中心化交易所（也称为 DEX）。
 
-Scripts are used for complex on-chain interactions that won't persist. An example of this may be using a DEX and Lender to create a leveraged position (borrow, swap, re-collateralize, borrow) which is a complex transaction that would usually take multiple steps.
+脚本用于不会持续存在的复杂链上交互。一个例子可能是使用 DEX 和 Lender 创建一个杠杆头寸（借款、交换、重新抵押、借款），这是一个通常需要多个步骤的复杂交易。
 
-Libraries are for code that is reusable and useful for handling common situations. A good example of this would be a library to handle fixed-point math or big number math.
+库是用于处理常见情况的可重用代码。一个很好的例子是用于处理定点数运算或大数运算的库。
 
-- [Contracts](./smart_contracts.md)
-- [Libraries](./libraries.md)
-- [Scripts](./scripts.md)
-- [Predicates](./predicates.md)
+- [合约](./smart_contracts.md)
+- [库](./libraries.md)
+- [脚本](./scripts.md)
+- [断言](./predicates.md)
