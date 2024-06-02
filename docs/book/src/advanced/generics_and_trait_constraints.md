@@ -1,64 +1,46 @@
-# Generics and Trait Constraints
+# 泛型和特质约束
 
-## Generics as Constraints
+## 泛型作为约束
 
-At a high level, Sway allows you to define constraints, or restrictions, that
-allow you to strike a balance between writing abstract and reusable code and
-enforcing compile-time checks to determine if the abstract code that you've
-written is correct.
+在高层次上，Sway 允许您定义约束或限制，从而在编写抽象和可重用的代码以及强制执行编译时检查之间取得平衡，以确定您编写的抽象代码是否正确。
 
-The "abstract and reusable" part largely comes from [generic types](./generic_types.md) and the
-"enforcing compile-time checks" part largely comes from trait constraints.
-Generic types can be used with functions, structs, and enums (as we have seen in
-this book), but they can also be used with traits.
+“抽象和可重用”的部分主要来自[泛型类型](./generic_types.md)，而“强制执行编译时检查”的部分主要来自特质约束。
+泛型类型可以与函数、结构体和枚举一起使用（正如本书中所见），但它们也可以与特质一起使用。
 
-## Generic Traits
+## 泛型特质
 
-Combining generic types with traits allows you to write abstract and reusable
-traits that can be implemented for any number of data types.
+将泛型类型与特质结合使用，允许您编写抽象和可重用的特质，可用于任意数量的数据类型。
 
-For example, imagine that you want to write a trait for converting between
-different types. This would be similar to Rust's `Into` and `From` traits. In
-Sway your conversion trait would look something like:
+例如，想象一下，您想编写一个用于在不同类型之间进行转换的特质。这类似于 Rust 的 `Into` 和 `From` 特质。在 Sway 中，您的转换特质将如下所示：
 
 ```sway
 {{#include ../../../../examples/traits/src/main.sw:trait_definition}}
 ```
 
-The trait `Convert` takes a generic type `T`. `Convert` has one method
-`from`, which takes one parameter of type `T` and returns a `Self`. This means
-that when you implement `Convert` for a data type, `from` will return the type
-of that data type but will take as input the type that you define as `T`. Here
-is an example:
+特质 `Convert` 接受一个泛型类型 `T`。`Convert` 有一个名为 `from` 的方法，该方法接受一个 `T` 类型的参数并返回一个 `Self`。这意味着当您为数据类型实现 `Convert` 时，`from` 将返回该数据类型的类型，但将您定义为 `T` 的类型作为输入。下面是一个示例：
 
 ```sway
 {{#include ../../../../examples/traits/src/main.sw:trait_impl}}
 ```
 
-In this example, you have two different data types, `Square` and `Rectangle`.
-You know that all squares are rectangles and thus `Square` can convert into `Rectangle` (but not vice
-versa) and thus you can implement the conversion trait for those types.
+在此示例中，您有两种不同的数据类型，`Square` 和 `Rectangle`。您知道所有正方形都是矩形，因此 `Square` 可以转换为 `Rectangle`（但反之不行），因此您可以为这些类型实现转换特质。
 
-If we want to call these methods we can do so by:
+如果我们想调用这些方法，我们可以这样做：
 
 ```sway
 {{#include ../../../../examples/traits/src/main.sw:trait_usage}}
 ```
 
-## Trait Constraints
+## 特质约束
 
-Trait constraints allow you to use generic types and traits to place constraints
-on what abstract code you are willing to accept in your program as correct.
-These constraints take the form of compile-time checks for correctness.
+特质约束允许您使用泛型类型和特质来对您在程序中愿意接受的抽象代码进行约束。
+这些约束采用编译时检查以确保正确性。
 
-If we wanted to use trait constraints with our `Convert` trait from the previous
-section we could do so like so:
+如果我们想要在上一节的 `Convert` 特质中使用特质约束，我们可以像这样做：
 
 ```sway
 {{#include ../../../../examples/traits/src/main.sw:trait_constraint}}
 ```
 
-This function allows you to take any generic data type `T` and convert it to the
-type `Rectangle` _as long as `Convert<T>` is implemented for `Rectangle`_.
-Calling this function with a type `T` for which `Convert<T>` is not implemented
-for `Rectangle` will fail Sway's compile-time checks.
+这个函数允许您接受任何泛型数据类型 `T` 并将其转换为 `Rectangle` 类型，只要 `Convert<T>` 已为 `Rectangle` 实现即可。
+调用此函数时，如果为 `Convert<T>` 没有为 `Rectangle` 实现而传入类型 `T`，则 Sway 的编译时检查将失败。

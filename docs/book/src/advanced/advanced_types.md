@@ -1,37 +1,37 @@
-# Advanced Types
+# 高级类型
 
-## Creating Type Synonyms with Type Aliases
+## 使用类型别名创建类型同义词
 
-Sway provides the ability to declare a type alias to give an existing type another name. For this we use the `type` keyword. For example, we can create the alias `Kilometers` to `u64` like so:
+Sway 提供了声明类型别名的能力，以给现有类型赋予另一个名称。我们使用 `type` 关键字来实现这一点。例如，我们可以这样创建别名 `Kilometers` 来表示 `u64`：
 
 ```sway
 {{#include ../../../../examples/type_aliases/src/main.sw:type_alias}}
 ```
 
-Now, the alias `Kilometers` is a _synonym_ for `u64`. Note that `Kilometers` is **not** a separate new type. Values that have the type `Kilometers` will be treated the same as values of type `u64`:
+现在，别名 `Kilometers` 是 `u64` 的一个 _同义词_。请注意，`Kilometers` **不是** 一个单独的新类型。具有类型 `Kilometers` 的值将被视为与 `u64` 类型的值相同：
 
 ```sway
 {{#include ../../../../examples/type_aliases/src/main.sw:addition}}
 ```
 
-Because `Kilometers` and `u64` are the same type, we can add values of both types and we can pass `Kilometers` values to functions that take `u64` parameters. However, using this method, we don’t get the type checking benefits that we get from introducing a _separate_ new type called `Kilometers`. In other words, if we mix up `Kilometers` and `i32` values somewhere, the compiler will not give us an error.
+因为 `Kilometers` 和 `u64` 是相同的类型，我们可以对两种类型的值进行相加，并且我们可以将 `Kilometers` 值传递给接受 `u64` 参数的函数。然而，使用这种方法，我们不会得到引入名为 `Kilometers` 的 _单独_ 新类型所获得的类型检查优势。换句话说，如果我们在某个地方混淆了 `Kilometers` 和 `i32` 值，编译器将不会给我们报错。
 
-The main use case for type synonyms is to reduce repetition. For example, we might have a lengthy array type like this:
+类型同义词的主要用途是减少重复。例如，我们可能有一个冗长的数组类型，如下所示：
 
 ```sway
 [MyStruct<u64, b256>; 5]
 ```
 
-Writing this lengthy type in function signatures and as type annotations all over the code can be tiresome and error prone. Imagine having a project full of code like this:
+在函数签名和类型注解中编写这种冗长的类型以及在整个代码中的各处都是繁琐且容易出错的。想象一下，一个项目充满了类似这样的代码：
 
 ```sway
 {{#include ../../../../examples/type_aliases/src/main.sw:long_type_use}}
 ```
 
-A type alias makes this code more manageable by reducing the repetition. Below, we’ve introduced an alias named `MyArray` for the verbose type and can replace all uses of the type with the shorter alias `MyArray`:
+通过引入一个名为 `MyArray` 的别名，使这段代码更易管理，减少了重复。我们可以将别名 `MyArray` 替换为更短的别名 `MyArray`：
 
 ```sway
 {{#include ../../../../examples/type_aliases/src/main.sw:long_type_use_shorter}}
 ```
 
-This code is much easier to read and write! Choosing a meaningful name for a type alias can help communicate your intent as well.
+这段代码更容易阅读和书写！选择一个有意义的名称作为类型别名可以帮助传达您的意图。

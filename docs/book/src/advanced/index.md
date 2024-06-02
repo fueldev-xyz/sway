@@ -1,12 +1,12 @@
-# Advanced Concepts
+# 高级概念
 
-Advanced concepts.
+高级概念。
 
-- [Advanced Types](./advanced_types.md)
-- [Advanced Storage](./advanced_storage.md)
-- [Generic Types](./generic_types.md)
-- [Traits](./traits.md)
-- [Associated Types](./associated_types.md)
-- [Generics and Trait Constraints](./generics_and_trait_constraints.md)
-- [Assembly](./assembly.md)
-- [Never Type](./never_type.md)
+- [高级类型](./advanced_types.md)
+- [高级存储](./advanced_storage.md)
+- [泛型类型](./generic_types.md)
+- [特质](./traits.md)
+- [关联类型](./associated_types.md)
+- [泛型和特质约束](./generics_and_trait_constraints.md)
+- [汇编](./assembly.md)
+- [never 类型](./never_type.md)

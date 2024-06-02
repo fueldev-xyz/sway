@@ -1,143 +1,135 @@
-# Generic Types
+# 泛型类型
 
-## Basics
+## 基础知识
 
-In Sway, generic types follow a very similar pattern to those in Rust. Let's look at some example syntax,
-starting with a generic function:
+在 Sway 中，泛型类型遵循与 Rust 中相似的模式。让我们从一个泛型函数的示例语法开始：
 
 ```sway
 fn noop<T>(argument: T) -> T {
-    argument
+argument
 }
 ```
 
-Here, the `noop()` function trivially returns exactly what was given to it. `T` is a _type parameter_, and it says
-that this function exists for all types T. More formally, this function could be typed as:
+在这里，`noop()` 函数以与之传入相同的方式平凡地返回值。`T` 是一个 _类型参数_，它表示这个函数适用于所有类型 `T`。更正式地说，这个函数可以被类型为：
 
 ```math
 noop :: ∀T. T -> T
 ```
 
-Generic types are a way to refer to types _in general_, meaning without specifying a single type. Our `noop` function
-would work with any type in the language, so we don't need to specify `noop(argument: u8) -> u8`, `noop(argument: u16) -> u16`, etc.
+泛型类型是一种引用 _一般_ 类型的方式，这意味着没有指定单个类型。我们的 `noop` 函数可以适用于语言中的任何类型，因此我们不需要指定 `noop(argument: u8) -> u8`、`noop(argument: u16) -> u16` 等。
 
-## Code Generation
+## 代码生成
 
-One question that arises when dealing with generic types is: how does the assembly handle this? There are a few approaches to handling
-generic types at the lowest level. Sway uses a technique called [monomorphization](https://en.wikipedia.org/wiki/Monomorphization). This
-means that the generic function is compiled to a non-generic version for every type it is called on. In this way, generic functions are
-purely shorthand for the sake of ergonomics.
+在处理泛型类型时，一个问题是：汇编如何处理这个问题？在最底层处理泛型类型时有几种方法。Sway 使用一种称为 [单态化](https://en.wikipedia.org/wiki/Monomorphization) 的技术。这意味着泛型函数将编译为每种类型都被调用的非泛型版本。通过这种方式，泛型函数纯粹是为了符号上的方便。
 
-## Trait Constraints
+## Trait 约束
 
-An important background to know before diving into trait constraints is that the `where` clause can be used to specify the required traits for the generic argument. So, when writing something like a `HashMap` you may
-want to specify that the generic argument implements a `Hash` trait.
+在深入讨论特征约束之前，重要的背景知识是 `where` 子句可用于指定泛型参数所需的特征。因此，当编写像 `HashMap` 这样的东西时，您可能想要指定泛型参数实现了 `Hash` 特征。
 
 ```sway
 fn get_hashmap_key<T>(key: T) -> b256
-    where T: Hash
+where T: Hash
 {
-    // Code within here can then call methods associated with the Hash trait on Key
+// 此处的代码可以调用与 Hash 特征关联的方法
 }
 ```
 
-Of course, our `noop()` function is not useful. Often, a programmer will want to declare functions over types which satisfy certain traits.
-For example, let's try to implement the successor function, `successor()`, for all numeric types.
+当然，我们的 `noop()` 函数并不实用。通常，程序员会想要声明符合某些特征的类型的函数。例如，让我们尝试为所有数字类型实现后继函数 `successor()`。
 
 ```sway
 fn successor<T>(argument: T)
-    where T: Add
+where T: Add
 {
-    argument + 1
+argument + 1
 }
 ```
 
-Run `forc build`, and you will get:
+运行 `forc build`，您将得到：
 
 ```console
 .. |
- 9 |   where T: Add
-10 |   {
-11 |       argument + 1                                        
-   |                  ^ Mismatched types: expected type "T" but saw type "u64"
-12 |   }
+9 | where T: Add
+10 | {
+11 | argument + 1
+ | ^ 类型不匹配：期望类型 "T"，但看到类型 "u64"
+12 | }
 13 |
 ```
 
-This is because we don't know for a fact that `1`, which in this case defaulted to `1u64`, actually can be added to `T`. What if `T` is `f64`? Or `b256`? What does it mean to add `1u64` in these cases?
+这是因为我们无法确定 `1`，在这种情况下默认为 `1u64`，实际上是否可以添加到 `T` 上。如果 `T` 是 `f64`？或者 `b256`？在这些情况下，将 `1u64` 添加到 `T` 是什么意思？
 
-We can solve this problem with another trait constraint. We can only find the successor of some value of type `T` if that type `T` defines some incrementor. Let's make a trait:
+我们可以通过另一个特征约束解决这个问题。只有在类型 `T` 定义了某种增量器时，我们才能找到类型 `T` 的一些值的后继函数。让我们创建一个特征：
 
 ```sway
 trait Incrementable {
-    /// Returns the value to add when calculating the successor of a value.
-    fn incrementor() -> Self;
+/// 返回计算值的后继时要添加的值。
+fn incrementor() -> Self;
 }
 ```
 
-Now, we can modify our `successor()` function:
+现在，我们可以修改我们的 `successor()` 函数：
 
 ```sway
 fn successor<T>(argument: T)
-    where T: Add,
-          T: Incrementable
+where T: Add,
+T: Incrementable
 {
-    argument + T::incrementor()
+argument + T::incrementor()
 }
 ```
 
-## Generic Structs and Enums
+## 泛型结构体和枚举
 
-Just like functions, structs and enums can be generic. Let's take a look at the standard library version of `Option<T>`:
+与函数类似，结构体和枚举也可以是泛型的。让我们看看标准库版本的 `Option<T>`：
 
 ```sway
 enum Option<T> {
-    Some: T,
-    None: (),
+Some: T,
+None: (),
 }
 ```
 
-Just like an unconstrained generic function, this type exists for all (∀) types `T`. `Result<T, E>` is another example:
+就像一个无约束的泛型函数一样，这个类型对于所有 (∀) 类型 `T` 都是存在的。`Result<T, E>` 是另一个例子：
 
 ```sway
 enum Result<T, E> {
-    Ok: T,
-    Err: E,
+Ok: T,
+Err: E,
 }
 ```
 
-Both generic enums and generic structs can be trait constrained, as well. Consider this struct:
+泛型枚举和泛型结构体都可以是特征约束的。考虑这个结构体：
 
 ```sway
 struct Foo<T>
-    where T: Add
+where T: Add
 {
-    field_one: T,
+field_one: T,
 }
 ```
 
-## Type Arguments
+## 类型参数
 
-Similar to Rust, Sway has what is colloquially known as the [turbofish](https://github.com/rust-lang/rust/blob/e98309298d927307c5184f4869604bd068d26183/src/test/ui/parser/bastion-of-the-turbofish.rs). The turbofish looks like this: `::<>` (see the little fish with bubbles behind it?). The turbofish is used to annotate types in a generic context. Say you have the following function:
+与 Rust 类似，Sway 中有一个俗称为 [turbofish](https://github.com/rust-lang/rust/blob/e98309298d927307c5184f4869604bd068d26183/src/test/ui/parser/bastion-of-the-turbofish.rs) 的概念。turbofish 看起来像这样：`::<>`（看到后面带着气泡的小鱼了吗？）。turbofish 用于在泛型上下文中注释类型。假设你有以下函数：
 
 ```sway
 fn foo<T, E>(t: T) -> Result<T, E> {
-    Ok(t)
+Ok(t)
 }
 ```
 
-In this code example, which is admittedly asinine, you can't possibly know what type `E` is. You'd need to provide the type manually, with a turbofish:
+在这个示例代码中，你不可能知道类型 `E` 是什么。你需要手动提供类型，使用 turbofish：
 
 ```sway
 fn foo<T, E>(t: T) -> Result<T, E> {
-    Ok::<T, MyErrorType>(t)
+Ok::<T, MyErrorType>(t)
 }
 ```
 
-It is also common to see the turbofish used on the function itself:
+通常还会在函数本身上看到 turbofish 的使用：
 
 ```sway
 fn main() {
-    foo::<Bar, Baz>()
+foo::<Bar, Baz>()
 }
 ```

@@ -1,53 +1,47 @@
-# Never Type
+# Never 类型
 
-The Never type `!` represents the type of computations which never resolve to any value at all.
+Never 类型 `!` 表示永远不会解析为任何值的计算类型。
 
-## Additional Information
+## 附加信息
 
-`break`, `continue` and `return` expressions also have type `!`. For example we are allowed to
-write:
+`break`、`continue` 和 `return` 表达式也具有类型 `!`。例如，我们可以编写：
 
 ```sway
 let x: ! = {
-    return 123
+return 123
 };
 ```
 
-Although the `let` is pointless here, it illustrates the meaning of `!`. Since `x` is never
-assigned a value (because `return` returns from the entire function), `x` can be given type
-`Never`. We could also replace `return 123` with a `revert()` or a never-ending `loop` and this code
-would still be valid.
+虽然这里的 `let` 是无意义的，但它说明了 `!` 的含义。由于 `x` 永远不会被赋值（因为 `return` 从整个函数返回），因此可以给 `x` 赋予类型 Never 类型。我们也可以用 `revert()` 或永不结束的 `loop` 替换 `return 123`，这段代码仍然有效。
 
-A more realistic usage of `Never` is in this code:
+Never 类型的更实际的用法如下：
 
 ```sway
 let num: u32 = match get_a_number() {
-    Some(num) => num,
-    None => break,
+Some(num) => num,
+None => break,
 };
 ```
 
-Both match arms must produce values of type [`u32`], but since `break` never produces a value
-at all we know it can never produce a value which isn't a [`u32`]. This illustrates another
-behaviour of the `!` type - expressions with type `!` will coerce into any other type.
+匹配分支必须产生 [`u32`] 类型的值，但由于 `break` 永远不会产生任何值，我们知道它永远不会产生不是 [`u32`] 类型的值。这说明了 Never 类型 的另一种行为 - 类型为 Never 类型 的表达式将强制转换为任何其他类型。
 
-Note that `!` type coerces into any other type, another example of this would be:
+注意， Never 类型 可以强制转换为任何其他类型，另一个例子是：
 
 ```sway
 let x: u32 = {
-    return 123
+return 123
 };
 ```
 
-Regardless of the type of `x`, the return block of type `Never` will always coerce into `x` type.
+无论 `x` 的类型如何，类型为 Never 类型 的返回块将始终强制转换为 `x` 类型。
 
-## Examples
+## 示例
 
 ```sway
 fn foo() {
-    let num: u64 = match Option::None::<u64> {
-        Some(num) => num,
-        None => return,
-    };
+let num: u64 = match Option::None::<u64> {
+Some(num) => num,
+None => return,
+};
 }
 ```

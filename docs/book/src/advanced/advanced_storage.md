@@ -1,73 +1,73 @@
-# Advanced Storage
+# 高级存储
 
-## Nested Storage Collections
+## 嵌套存储集合
 
-Through the use of `StorageKey`s, you may have nested storage collections such as storing a `StorageString` in a `StorageMap<K, V>`.
+通过使用 `StorageKey`，您可以拥有嵌套的存储集合，例如将 `StorageString` 存储在 `StorageMap<K, V>` 中。
 
-For example, here we have a few common nested storage types declared in a `storage` block:
+例如，这里我们在一个 `storage` 块中声明了一些常见的嵌套存储类型：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_storage_declaration}}
 ```
 
-Please note that storage initialization is needed to do this.
+请注意，需要进行存储初始化才能实现这一点。
 
-### Storing a `StorageVec<T>` in a `StorageMap<K, V>`
+### 将 `StorageVec<T>` 存储在 `StorageMap<K, V>` 中
 
-The following demonstrates how to write to a `StorageVec<T>` that is nested in a `StorageMap<T, V>`:
+以下演示了如何将嵌套在 `StorageMap<T, V>` 中的 `StorageVec<T>` 写入：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_vec_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageVec<T>` that is nested in a `StorageMap<T, V>`:
+以下演示了如何从嵌套在 `StorageMap<T, V>` 中的 `StorageVec<T>` 中读取：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_vec_storage_read}}
 ```
 
-### Storing a `StorageString` in a `StorageMap<K, V>`
+### 将 `StorageString` 存储在 `StorageMap<K, V>` 中
 
-The following demonstrates how to write to a `StorageString` that is nested in a `StorageMap<T, V>`:
+以下演示了如何将嵌套在 `StorageMap<T, V>` 中的 `StorageString` 写入：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_string_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageString` that is nested in a `StorageMap<T, V>`:
+以下演示了如何从嵌套在 `StorageMap<T, V>` 中的 `StorageString` 中读取：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_string_storage_read}}
 ```
 
-### Storing a `StorageBytes` in a `StorageVec<T>`
+### 将 `StorageBytes` 存储在 `StorageVec<T>` 中
 
-The following demonstrates how to write to a `StorageBytes` that is nested in a `StorageVec<T>`:
+以下演示了如何将嵌套在 `StorageVec<T>` 中的 `StorageBytes` 写入：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_vec_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageBytes` that is nested in a `StorageVec<T>`:
+以下演示了如何从嵌套在 `StorageVec<T>` 中的 `StorageBytes` 中读取：
 
 ```sway
 {{#include ../../../../examples/nested_storage_variables/src/main.sw:nested_vec_storage_read}}
 ```
 
-## Storage Namespace
+## 存储命名空间
 
-If you want the values in storage to be positioned differently, for instance to avoid collisions with storage from another contract when loading code, you can use the namespace annotation to add a salt to the slot calculations.
+如果希望存储中的值位于不同的位置，例如在加载代码时避免与另一个合约的存储发生冲突，可以使用命名空间注解为插槽计算添加盐。
 
 ```sway
 {{#include ../../../../examples/storage_namespace/src/main.sw:storage_namespace}}
 ```
 
-## Manual Storage Management
+## 手动存储管理
 
-It is possible to leverage FuelVM storage operations directly using the `std::storage::storage_api::write` and `std::storage::storage_api::read` functions provided in the standard library. With this approach, you will have to manually assign the internal key used for storage. An example is as follows:
+可以直接利用标准库中提供的 `std::storage::storage_api::write` 和 `std::storage::storage_api::read` 函数来利用 FuelVM 存储操作。使用这种方法，您将不得不手动分配用于存储的内部键。示例如下：
 
 ```sway
 {{#include ../../../../examples/storage_example/src/main.sw}}
 ```
 
-> **Note**: Though these functions can be used for any data type, they should mostly be used for arrays because arrays are not yet supported in `storage` blocks. Note, however, that _all_ data types can be used as types for keys and/or values in `StorageMap<K, V>` without any restrictions.
+> **注意**：虽然这些函数可以用于任何数据类型，但它们主要用于数组，因为数组尚未在 `storage` 块中受到支持。但请注意，_所有_ 数据类型都可以作为 `StorageMap<K, V>` 中的键和/或值的类型使用，没有任何限制。
