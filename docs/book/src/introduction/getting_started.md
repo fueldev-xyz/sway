@@ -1,9 +1,9 @@
-# Getting Started
+# 入门
 
-## Installing the `Fuel` toolchain
+## 安装 `Fuel` 工具链
 
-Please visit the Fuel [Installation Guide](https://docs.fuel.network/guides/installation) to install the Fuel toolchain binaries and prerequisites.
+请访问 Fuel [安装指南](https://docs.fuel.network/guides/installation) 以安装 Fuel 工具链的二进制文件和先决条件。
 
-## Sway Quickstart
+## Sway 快速入门
 
-Check out the [Developer Quickstart Guide](https://docs.fuel.network/guides/quickstart/) for a step-by-step guide on building a fullstack dapp on Fuel. The guide will walk you through writing a smart contract, setting up a wallet, and building a frontend to interact with your contract.
+查看 [开发者快速入门指南](https://docs.fuel.network/guides/quickstart/) 以获得在 Fuel 上构建全栈 dapp 的逐步指南。该指南将引导您编写智能合约、设置钱包，并构建与合约交互的前端。
