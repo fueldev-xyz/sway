@@ -1,12 +1,14 @@
-# Commonly Used Library Types
+# 常用的库类型
 
-The Sway Standard Library is the foundation of portable Sway software, a set of minimal shared abstractions for the broader Sway ecosystem. It offers core types, library-defined operations on language primitives, native asset management, blockchain contextual operations, access control, storage management, and support for types from other VMs, among many other things. Reference the standard library docs [here](https://fuellabs.github.io/sway/master/std/index.html).
+Sway 标准库是可移植 Sway 软件的基础，是广泛的 Sway 生态系统的一组最小共享抽象。它提供了核心类型、对语言原语的库定义操作、本地资产管理、区块链上下文操作、访问控制、存储管理以及对其他 VM 类型的支持，等等。可以在[这里](https://fuellabs.github.io/sway/master/std/index.html)查看标准库文档。
 
 ## `Result<T, E>`
 
 <!-- This section should explain what the `Result` type is -->
 <!-- result:example:start -->
-Type `Result` is the type used for returning and propagating errors. It is an `enum` with two variants: `Ok(T)`, representing success and containing a value, and `Err(E)`, representing error and containing an error value. The `T` and `E` in this definition are type parameters, allowing `Result` to be generic and to be used with any types.
+
+`Result`类型用于返回和传播错误。它是一个`enum`，有两个变体：`Ok(T)`，表示成功并包含一个值，和`Err(E)`，表示错误并包含一个错误值。在这个定义中的`T`和`E`是类型参数，允许`Result`是泛型的，并且可以与任何类型一起使用。
+
 <!-- result:example:end -->
 
 ```sway
@@ -15,10 +17,12 @@ Type `Result` is the type used for returning and propagating errors. It is an `e
 
 <!-- This section should explain when to use the `Result` type -->
 <!-- use_result:example:start -->
-Functions return `Result` whenever errors are expected and recoverable.
+
+每当预期并且可恢复的错误时，函数都会返回`Result`。
+
 <!-- use_result:example:end -->
 
-Take the following example:
+考虑以下示例：
 
 ```sway
 {{#include ../../../../examples/result/src/main.sw}}
@@ -28,12 +32,14 @@ Take the following example:
 
 <!-- This section should explain the `Option` type -->
 <!-- option:example:start -->
-Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not. `Option` types are very common in Sway code, as they have a number of uses:
 
-- Initial values where `None` can be used as an initializer.
-- Return value for otherwise reporting simple errors, where `None` is returned on error.
+`Option`类型表示可选值：每个`Option`要么是`Some`并包含一个值，要么是`None`，不包含值。在 Sway 代码中，`Option`类型非常常见，因为它们具有多种用途：
 
-The implementation of `Option` matches on the variant: if it's `Ok` it returns the inner value, if it's `None`, it [reverts](https://github.com/FuelLabs/fuel-specs/blob/master/src/fuel-vm/instruction-set.md#rvrt-revert).
+- 初始值可以使用`None`作为初始化器。
+- 作为简单错误的返回值，在错误时返回`None`。
+
+`Option`的实现基于变体进行匹配：如果是`Ok`，它将返回内部值；如果是`None`，它会[回滚](https://github.com/FuelLabs/fuel-specs/blob/master/src/fuel-vm/instruction-set.md#rvrt-revert)。
+
 <!-- option:example:end -->
 
 ```sway
@@ -42,10 +48,12 @@ The implementation of `Option` matches on the variant: if it's `Ok` it returns t
 
 <!-- This section should explain when to use the `Option` type -->
 <!-- use_option:example:start -->
-`Option` is commonly paired with pattern matching to query the presence of a value and take action, allowing developers to choose how to handle the `None` case.
+
+`Option`通常与模式匹配配对，以查询值的存在并采取行动，使开发人员能够选择如何处理`None`情况。
+
 <!-- use_option:example:end -->
 
-Below is an example that uses pattern matching to handle invalid divisions by 0 by returning an `Option`:
+下面是一个示例，使用模式匹配来处理除以 0 的无效除法，并返回一个`Option`：
 
 ```sway
 {{#include ../../../../examples/option/src/main.sw}}

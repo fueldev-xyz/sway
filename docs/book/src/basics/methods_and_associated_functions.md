@@ -1,22 +1,24 @@
-# Methods and Associated Functions
+# 方法和关联函数
 
-<!-- This section should explain methods & associated functions in Sway -->
+<!-- 这部分应该解释 Sway 中的方法和关联函数 -->
 <!-- methods_af:example:start -->
-## Methods
 
-Methods are similar to [functions](functions.md) in that we declare them with the `fn` keyword and they have parameters and return a value. However, unlike functions, _Methods_ are defined within the context of a struct (or enum), and either refers to that type or mutates it. The first parameter of a method is always `self`, which represents the instance of the struct (or enum) the method is being called on.
+## 方法
 
-## Associated Functions
+方法与[函数](functions.md)类似，我们使用 `fn` 关键字声明它们，它们有参数并返回一个值。但是，与函数不同，_方法_ 是在结构体（或枚举）的上下文中定义的，并且要么引用该类型，要么对其进行修改。方法的第一个参数始终是 `self`，它表示调用该方法的结构体（或枚举）的实例。
 
-_Associated functions_ are very similar to _methods_, in that they are also defined in the context of a struct or enum, but they do not actually use any of the data in the struct and as a result do not take _self_ as a parameter. Associated functions could be standalone functions, but they are included in a specific type for organizational or semantic reasons.
+## 关联函数
 
-### Constructors
+_关联函数_ 与 _方法_ 非常相似，因为它们也在结构体或枚举的上下文中定义，但它们实际上不使用结构体中的任何数据，因此不会将 _self_ 作为参数。关联函数可以是独立的函数，但它们包含在特定类型中是出于组织或语义上的原因。
 
-Constructors are associated functions that construct, or in other words instantiate, new instances of a type. Their return type is always the type itself. E.g., public structs that have private fields must provide a public constructor, or otherwise they cannot be instantiated outside of the module in which they are declared.
+### 构造函数
 
-## Declaring Methods and Associated Functions
+构造函数是构造新实例的关联函数，或者换句话说是实例化。它们的返回类型始终是类型本身。例如，具有私有字段的公共结构体必须提供公共构造函数，否则它们不能在声明它们的模块之外被实例化。
 
-To declare methods and associated functions for a struct or enum, use an `impl` block. Here, `impl` is short for implementation.
+## 声明方法和关联函数
+
+要为结构体或枚举声明方法和关联函数，请使用 `impl` 块。在这里，`impl` 是 implementation 的缩写。
+
 <!-- methods_af:example:end -->
 
 ```sway
@@ -25,21 +27,25 @@ To declare methods and associated functions for a struct or enum, use an `impl` 
 
 <!-- This section should explain how to call a method -->
 <!-- call_method:example:start -->
-To call a method, simply use dot syntax: `foo.iz_baz_true()`.
+
+要调用方法，只需使用点语法：`foo.iz_baz_true()`。
+
 <!-- call_method:example:end -->
 
 <!-- This section should explain how methods + assoc. fns can accept `ref mut` params -->
 <!-- ref_mut:example:start -->
-Similarly to [free functions](functions.md), methods and associated functions may accept `ref mut` parameters.
+
+与[自由函数](functions.md)类似，方法和关联函数可能会接受 `ref mut` 参数。
+
 <!-- ref_mut:example:end -->
 
-For example:
+例如：
 
 ```sway
 {{#include ../../../../examples/ref_mut_params/src/main.sw:move_right}}
 ```
 
-and when called:
+在调用时：
 
 ```sway
 {{#include ../../../../examples/ref_mut_params/src/main.sw:call_move_right}}

@@ -1,124 +1,130 @@
-# Structs, Tuples, and Enums
+# 结构体、元组和枚举
 
-## Structs
+## 结构体
 
-<!-- This section should explain structs in Sway -->
+<!-- 这部分应该解释 Sway 中的结构体 -->
 <!-- structs:example:start -->
-Structs in Sway are a named grouping of types. You may also be familiar with structs via another name: _product types_. Sway does not make any significantly unique usages of structs; they are similar to most other languages which have structs. If you're coming from an object-oriented background, a struct is like the data attributes of an object.
 
-Those data attributes are called _fields_ and can be either public or private.
+在 Sway 中，结构体是一组命名的类型。您可能也通过另一个名称熟悉结构体：_产品类型_。Sway 并没有对结构体进行显著独特的用法；它们与大多数其他具有结构体的语言类似。如果您来自面向对象的背景，那么结构体就像对象的数据属性。
 
-Private struct fields can be accessed only within the module in which their struct is declared. Public fields are accessible everywhere where the struct is accessible. This access control on the field level allows more fine grained encapsulation of data.
+这些数据属性称为 _字段_，可以是公共的或私有的。
+
+私有结构体字段只能在其结构体声明所在的模块内访问。公共字段则可在结构体可访问的任何地方访问。字段级别的访问控制允许更精细地封装数据。
 
 <!-- structs:example:end -->
 
-To explain these concepts, let's take a look at the following example, in which we have a module called _data_structures_.
+为了解释这些概念，让我们看一下以下示例，在该示例中我们有一个名为 _data_structures_ 的模块。
 
-In that module, we declare a struct named `Foo` with two fields. The first field is named `bar`, it is public and it accepts values of type `u64`. The second field is named `baz`, it is also public and it accepts `bool` values.
+在该模块中，我们声明了一个名为 `Foo` 的结构体，它有两个字段。第一个字段名为 `bar`，它是公共的，并接受 `u64` 类型的值。第二个字段名为 `baz`，它也是公共的，并接受 `bool` 类型的值。
 
-In a similar way, we define the structs `Point`, `Line`, and `TupleInStruct`. Since all those structs are public, and all their fields are public, they can be instantiated in other modules using the _struct instantiation syntax_ as shown below.
+类似地，我们定义了结构体 `Point`、`Line` 和 `TupleInStruct`。由于所有这些结构体都是公共的，并且它们的所有字段都是公共的，因此可以在其他模块中使用 _结构体实例化语法_ 来实例化它们，如下所示。
 
-On the other hand, the struct `StructWithPrivateFields` can be instantiated only within the _data_structures_ module, because it contains private fields. To be able to create instances of such structs outside of the module in which they are declared, the struct must offer [constructor associated functions](methods_and_associated_functions.md#constructors).
+另一方面，结构体 `StructWithPrivateFields` 只能在 _data_structures_ 模块内实例化，因为它包含私有字段。为了能够在声明它们的模块之外创建此类结构体的实例，结构体必须提供 [构造函数关联函数](methods_and_associated_functions.md#constructors)。
 
 ```sway
 {{#include ../../../../examples/structs/src/data_structures.sw}}
 ```
 
-<!-- This section should explain how to instantiate a struct in Sway -->
+<!-- 这部分应该解释如何在 Sway 中实例化结构体 -->
 <!-- new_struct:example:start -->
-In order to instantiate the struct we use _struct instantiation syntax_, which is very similar to the declaration syntax except with expressions in place of types.
 
-There are three ways to instantiate the struct.
+为了实例化结构体，我们使用了 _结构体实例化语法_，它与声明语法非常相似，只是用表达式代替了类型。
 
-- Hard coding values for the fields
-- Passing in variables with names different than the struct fields
-- Using a shorthand notation via variables that are the same as the field names
+有三种实例化结构体的方法。
+
+- 为字段硬编码值
+- 传递变量，其名称与结构体字段不同
+- 使用变量名称与字段名称相同的简写符号
 <!-- new_struct:example:end -->
 
 ```sway
 {{#include ../../../../examples/structs/src/main.sw}}
 ```
 
-> **Note**
-> You can mix and match all 3 ways to instantiate the struct at the same time.
-> Moreover, the order of the fields does not matter when instantiating however we encourage declaring the fields in alphabetical order and instantiating them in the same alphabetical order
+> **注意**
+> 您可以同时混合和匹配这三种实例化结构体的方式。
+> 此外，在实例化时字段的顺序并不重要，但我们鼓励按字母顺序声明字段，并以相同的字母顺序实例化它们。
 
-Furthermore, multiple variables can be extracted from a struct using the destructuring syntax.
+此外，可以使用解构语法从结构体中提取多个变量。
 
-### Struct Memory Layout
+### 结构体内存布局
 
-> **Note**
-> This information is not vital if you are new to the language, or programming in general
+> **注意**
+> 如果您是新手或者对编程不太了解，这些信息并不是必需的
 
-Structs have zero memory overhead. What that means is that in memory, each struct field is laid out sequentially. No metadata regarding the struct's name or other properties is preserved at runtime. In other words, structs are compile-time constructs. This is the same in Rust, but different in other languages with runtimes like Java.
+结构体没有内存开销。这意味着在内存中，每个结构体字段都是顺序排列的。运行时不会保留关于结构体名称或其他属性的元数据。换句话说，结构体是编译时构造。这与 Rust 中的情况相同，但与其他具有运行时的语言不同，如 Java。
 
-## Tuples
+## 元组
 
-<!-- This section should explain what tuples are and how to access tuple values -->
+<!-- 这部分应该解释元组是什么以及如何访问元组值 -->
 <!-- tuples:example:start -->
-Tuples are a [basic static-length type](./built_in_types.md#tuple-types) which contain multiple different types within themselves. The type of a tuple is defined by the types of the values within it, and a tuple can contain basic types as well as structs and enums.
 
-You can access values directly by using the `.` syntax. Moreover, multiple variables can be extracted from a tuple using the destructuring syntax.
+元组是一种[基本的静态长度类型](./built_in_types.md#tuple-types)，它们包含多个不同类型的值。元组的类型由其中的值的类型定义，元组可以包含基本类型以及结构体和枚举。
+
+您可以通过使用 `.` 语法直接访问值。此外，可以使用解构语法从元组中提取多个变量。
+
 <!-- tuples:example:end -->
 
 ```sway
 {{#include ../../../../examples/tuples/src/main.sw}}
 ```
 
-## Enums
+## 枚举
 
-<!-- This section should explain what enums are -->
+<!-- 这部分应该解释枚举是什么 -->
 <!-- enums:example:start -->
-_Enumerations_, or _enums_, are also known as _sum types_. An enum is a type that could be one of several variants. To declare an enum, you enumerate all potential variants.
+
+_枚举_，或 _enums_，也称为 _求和类型_。枚举是一种可以是几种变体中的一种的类型。要声明枚举，您需要列出所有可能的变体。
+
 <!-- enums:example:end -->
 
-Here, we have defined five potential colors. Each enum variant is just the color name. As there is no extra data associated with each variant, we say that each variant is of type `()`, or unit.
+在这里，我们定义了五种潜在的颜色。每个枚举变体只是颜色名称。由于每个变体都没有额外的数据关联，我们说每个变体的类型是 `()`，或单位。
 
 ```sway
 {{#include ../../../../examples/enums/src/basic_enum.sw}}
 ```
 
-### Enums of Structs
+### 包含结构体的枚举
 
-It is also possible to have an enum variant contain extra data. Take a look at this more substantial example, which combines struct declarations with enum variants:
+枚举变体也可以包含额外的数据。看一下这个更实质性的示例，它将结构体声明与枚举变体结合起来：
 
 ```sway
 {{#include ../../../../examples/enums/src/enum_of_structs.sw}}
 ```
 
-### Enums of Enums
+### 枚举的枚举
 
-It is possible to define enums of enums:
+可以定义枚举的枚举：
 
 ```sway
 {{#include ../../../../examples/enums/src/enum_of_enums.sw}}
 ```
 
-#### Preferred usage
+#### 首选用法
 
-The preferred way to use enums is to use the individual (not nested) enums directly because they are easy to follow and the lines are short:
+使用个别（非嵌套）枚举直接使用是首选的，因为它们易于跟踪，并且行数较短：
 
 ```sway
 {{#include ../../../../examples/enums/src/enums_preferred.sw}}
 ```
 
-#### Inadvisable
+#### 不建议的用法
 
-If you wish to use the nested form of enums via the `Error` enum from the example above, then you can instantiate them into variables using the following syntax:
+如果您希望使用上面示例中的 `Error` 枚举的嵌套形式，则可以使用以下语法将其实例化为变量：
 
 ```sway
 {{#include ../../../../examples/enums/src/enums_avoid.sw}}
 ```
 
-Key points to note:
+需要注意的要点：
 
-- You must import all of the enums you need instead of just the `Error` enum
-- The lines may get unnecessarily long (depending on the names)
-- The syntax is not the most ergonomic
+- 您必须导入所有需要的枚举，而不仅仅是 `Error` 枚举
+- 行可能会变得不必要地长（取决于名称）
+- 语法不是最符合人体工程学的
 
-### Enum Memory Layout
+### 枚举内存布局
 
-> **Note**
-> This information is not vital if you are new to the language, or programming in general.
+> **注意**
+> 如果您是新手或者对编程不太了解，这些信息并不是必需的。
 
-Enums do have some memory overhead. To know which variant is being represented, Sway stores a one-word (8-byte) tag for the enum variant. The space reserved after the tag is equivalent to the size of the _largest_ enum variant. So, to calculate the size of an enum in memory, add 8 bytes to the size of the largest variant. For example, in the case of `Color` above, where the variants are all `()`, the size would be 8 bytes since the size of the largest variant is 0 bytes.
+枚举确实会有一些内存开销。为了知道表示的是哪个变体，Sway 为枚举变体存储了一个字（8 个字节）的标签。标签后保留的空间等于 _最大_ 枚举变体的大小。因此，要计算枚举在内存中的大小，请将最大变体的大小加上 8 字节。例如，在上面的 `Color` 中，其中的变体都是 `()`，大小为 0 字节，因此大小为 8 字节。

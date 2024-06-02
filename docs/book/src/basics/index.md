@@ -1,16 +1,16 @@
-# Sway Language basics
+# Sway 语言基础
 
-Sway is a programming language designed for the FuelVM. It is a statically typed, compiled language with type inference and traits. Sway aims to make smart contract development safer and more efficient through the use of strong static analysis and compiler feedback.
+Sway 是为 FuelVM 设计的编程语言。它是一种静态类型、编译型语言，具有类型推断和特性。Sway 旨在通过强大的静态分析和编译器反馈，使智能合约开发更加安全和高效。
 
-Get started with the basics of Sway:
+从 Sway 的基础知识开始：
 
-- [Variables](./variables.md)
-- [Built-in Types](./built_in_types.md)
-- [Commonly Used Library Types](./commonly_used_library_types.md)
-- [Blockchain Types](./blockchain_types.md)
-- [Functions](./functions.md)
-- [Structs, Tuples, and Enums](./structs_tuples_and_enums.md)
-- [Methods and Associated Functions](./methods_and_associated_functions.md)
-- [Constants](./constants.md)
-- [Comments and Logging](./comments_and_logging.md)
-- [Control Flow](./control_flow.md)
+- [变量](./variables.md)
+- [内置类型](./built_in_types.md)
+- [常用库类型](./commonly_used_library_types.md)
+- [区块链类型](./blockchain_types.md)
+- [函数](./functions.md)
+- [结构体、元组和枚举](./structs_tuples_and_enums.md)
+- [方法和关联函数](./methods_and_associated_functions.md)
+- [常量](./constants.md)
+- [注释和日志](./comments_and_logging.md)
+- [控制流](./control_flow.md)

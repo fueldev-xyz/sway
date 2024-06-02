@@ -14,33 +14,33 @@
 
 让我们来看一个库中的 ABI 声明：
 
-\```sway
+```sway
 {{\#include ../../../../examples/wallet_abi/src/main.sw:abi_library}}
-\```
+```
 
 让我们专注于 ABI 声明并逐行检查它。
 
 ### The ABI Declaration
 
-\```sway
+```sway
 {{\#include ../../../../examples/wallet_abi/src/main.sw:abi}}
-\```
+```
 
 ---
 
 在第一行中，\`abi Wallet {\`，我们声明这个*应用程序二进制接口*（ABI）的名称。我们将这个 ABI 命名为 `Wallet`。要将此 ABI 导入到脚本以进行调用或导入到合约以进行实现，您将使用
 
-\```sway
+```sway
 {{\#include ../../../../examples/wallet_smart_contract/src/main.sw:abi_import}}
-\```
+```
 
 ---
 
 在第二行中，
 
-\```sway
+```sway
 {{\#include ../../../../examples/wallet_abi/src/main.sw:receive_funds}}
-\```
+```
 
 我们声明了一个名为`receive_funds`的 ABI 方法，当调用时，应该将资金存入这个钱包。请注意，我们在这里只是定义了一个接口，所以没有函数体或函数的实现。我们只需要定义接口本身。这种方式，ABI 声明类似于[特征声明](../advanced/traits.md)。这个特定的 ABI 方法不接受任何参数。
 
@@ -48,9 +48,9 @@
 
 在第三行中，
 
-\```sway
+```sway
 {{#include ../../../../examples/wallet_abi/src/main.sw:send_funds}}
-\```
+```
 
 我们声明了另一个 ABI 方法，这次称为`send_funds`。它接受两个参数：要发送的金额和要发送资金的地址。
 
@@ -62,9 +62,9 @@
 
 通过`impl <ABI名称> for Contract`语法实现合约的 ABI。`for Contract`语法只能用于实现合约的 ABI；为结构体实现方法应该使用`impl Foo`语法。
 
-\```sway
+```sway
 {{#include ../../../../examples/wallet_smart_contract/src/main.sw:abi_impl}}
-\```
+```
 
 您可能再次注意到[特征](../advanced/traits.md)和 ABI 之间的相似之处。而且，作为额外的奖励，您可以定义除了 ABI 接口表面之外的方法，就像特征一样。这些预实现的 ABI 方法自动成为实现相应 ABI 的合约接口的一部分。
 
@@ -80,9 +80,9 @@
 
 既然我们已经为合约定义了接口并实现了它，我们需要知道如何实际*调用*我们的合约。让我们看一下合约调用：
 
-\```sway
+```sway
 {{#include ../../../../examples/wallet_contract_caller_script/src/main.sw}}
-\```
+```
 
 主要的新概念是`abi cast`: `abi(AbiName, contract_address)`。这返回一个`ContractCaller`类型，可用于调用合约。ABI 的方法成为此合约调用者可用的方法：`send_funds`和`receive_funds`。然后我们直接调用合约 ABI 方法，就像它是常规方法一样。您还可以在主参数列表之前在花括号中指定以下特殊参数：
 
