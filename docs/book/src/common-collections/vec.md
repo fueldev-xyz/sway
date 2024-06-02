@@ -1,59 +1,59 @@
-# Vectors on the Heap
+# 堆上的向量
 
-The first collection type we’ll look at is `Vec<T>`, also known as a vector. Vectors allow you to store more than one value in a single data structure that puts all the values next to each other in memory. Vectors can only store values of the same type. They are useful when you have a list of items, such as the lines of text in a file or the prices of items in a shopping cart.
+我们将首先看一下 `Vec<T>`，也称为向量的集合类型。向量允许您在单个数据结构中存储多个值，将所有值都放在内存中的相邻位置。向量只能存储相同类型的值。当您有一个项目列表时，例如文件中的文本行或购物车中商品的价格时，它们非常有用。
 
-`Vec<T>` is included in the [standard library prelude](../introduction/standard_library.md#standard-library-prelude) which means that there is no need to import it manually.
+`Vec<T>` 包含在[标准库预导](../introduction/standard_library.md#standard-library-prelude)中，这意味着无需手动导入它。
 
-## Creating a New Vector
+## 创建一个新的向量
 
-To create a new empty vector, we call the `Vec::new` function, as shown below:
+要创建一个新的空向量，我们调用 `Vec::new` 函数，如下所示：
 
 ```sway
 {{#include ../../../../examples/vec/src/main.sw:vec_new}}
 ```
 
-Note that we added a type annotation here. Because we aren’t inserting any values into this vector, the Sway compiler doesn’t know what kind of elements we intend to store. Vectors are implemented using generics which means that the `Vec<T>` type provided by the standard library can hold any type. When we create a vector to hold a specific type, we can specify the type within angle brackets. In the example above, we’ve told the Sway compiler that the `Vec<T>` in `v` will hold elements of the `u64` type.
+请注意，这里我们添加了一个类型注释。因为我们没有向该向量插入任何值，所以 Sway 编译器不知道我们打算存储什么类型的元素。向量使用泛型实现，这意味着标准库提供的 `Vec<T>` 类型可以容纳任何类型。当我们创建一个用于保存特定类型的向量时，我们可以在尖括号内指定类型。在上面的示例中，我们告诉 Sway 编译器 `v` 中的 `Vec<T>` 将保存 `u64` 类型的元素。
 
-## Updating a Vector
+## 更新一个向量
 
-To create a vector and then add elements to it, we can use the `push` method, as shown below:
+要创建一个向量，然后向其中添加元素，我们可以使用 `push` 方法，如下所示：
 
 ```sway
 {{#include ../../../../examples/vec/src/main.sw:vec_push}}
 ```
 
-As with any variable, if we want to be able to change its value, we need to make it mutable using the `mut` keyword, as discussed in the section [Declaring a Variable](../basics/variables.md#declaring-a-variable). The numbers we place inside are all of type `u64`, and the Sway compiler infers this from the data, so we don’t need the `Vec<u64>` annotation.
+与任何变量一样，如果我们希望能够更改其值，我们需要使用 `mut` 关键字使其可变，如 [声明一个变量](../basics/variables.md#declaring-a-variable) 部分所讨论的。我们放置在其中的数字都是 `u64` 类型，Sway 编译器从数据中推断出这一点，因此我们不需要 `Vec<u64>` 注释。
 
-## Reading Elements of Vectors
+## 读取向量的元素
 
-To read a value stored in a vector at a particular index, you can use the `get` method as shown below:
+要读取向量中特定索引处存储的值，可以使用 `get` 方法，如下所示：
 
 ```sway
 {{#include ../../../../examples/vec/src/main.sw:vec_get}}
 ```
 
-Note two details here. First, we use the index value of `2` to get the third element because vectors are indexed by number, starting at zero. Second, we get the third element by using the `get` method with the index passed as an argument, which gives us an `Option<T>`.
+请注意两个细节。首先，我们使用索引值 `2` 来获取第三个元素，因为向量是按数字索引的，从零开始。其次，我们使用传递给 `get` 的索引作为参数来获取第三个元素，这给了我们一个 `Option<T>`。
 
-When the `get` method is passed an index that is outside the vector, it returns `None` without panicking. This is particularly useful if accessing an element beyond the range of the vector may happen occasionally under normal circumstances. Your code will then have logic to handle having either `Some(element)` or `None`. For example, the index could be coming as a contract method argument. If the argument passed is too large, the method `get` will return a `None` value, and the contract method may then decide to revert when that happens or return a meaningful error that tells the user how many items are in the current vector and give them another chance to pass a valid value.
+当 `get` 方法传递一个超出向量范围的索引时，它会返回 `None` 而不会发生恐慌。这在正常情况下偶尔会发生超出向量范围的元素访问时特别有用。您的代码将处理 `Some(element)` 或 `None` 的逻辑。例如，索引可以作为合同方法参数传递。如果传递的参数太大，方法 `get` 将返回一个 `None` 值，然后合同方法可能决定在发生这种情况时恢复，或者返回一个有意义的错误，告诉用户当前向量中有多少项，并给他们另一个机会传递有效的值。
 
-## Iterating over the Values in a Vector
+## 遍历向量中的值
 
-To access each element in a vector in turn, we would iterate through all of the valid indices using a `while` loop and the `len` method as shown below:
+要依次访问向量中的每个元素，我们将使用 `while` 循环和 `len` 方法遍历所有有效的索引，如下所示：
 
 ```sway
 {{#include ../../../../examples/vec/src/main.sw:vec_iterate}}
 ```
 
-Note two details here. First, we use the method `len` which returns the length of the vector. Second, we call the method `unwrap` to extract the `Option` returned by `get`. We know that `unwrap` will not fail (i.e. will not cause a revert) because each index `i` passed to `get` is known to be smaller than the length of the vector.
+请注意两个细节。首先，我们使用 `len` 方法返回向量的长度。其次，我们调用 `unwrap` 方法来提取 `get` 返回的 `Option`。我们知道 `unwrap` 不会失败（即不会导致回滚），因为传递给 `get` 的每个索引 `i` 都已知小于向量的长度。
 
-## Using an Enum to store Multiple Types
+## 使用枚举存储多种类型
 
-Vectors can only store values that are the same type. This can be inconvenient; there are definitely use cases for needing to store a list of items of different types. Fortunately, the variants of an enum are defined under the same enum type, so when we need one type to represent elements of different types, we can define and use an enum!
+向量只能存储相同类型的值。这可能不方便；肯定有需要存储不同类型的项目列表的用例。幸运的是，枚举的变体在同一枚举类型下定义，因此当我们需要一个类型来表示不同类型的元素时，我们可以定义和使用一个枚举！
 
-For example, say we want to get values from a row in a table in which some of the columns in the row contain integers, some `b256` values, and some Booleans. We can define an enum whose variants will hold the different value types, and all the enum variants will be considered the same type: that of the enum. Then we can create a vector to hold that enum and so, ultimately, holds different types. We’ve demonstrated this below:
+例如，假设我们要从表中的一行获取值，其中一些列包含整数，一些包含 `b256` 值，一些包含布尔值。我们可以定义一个枚举，其变体将保存不同的值类型，所有枚举变体都将被视为相同的类型：即枚举类型。然后我们可以创建一个向量来保存该枚举，因此，最终会保存不同的类型。我们已经在下面演示了这一点：
 
 ```sway
 {{#include ../../../../examples/vec/src/main.sw:vec_multiple_data_types}}
 ```
 
-Now that we’ve discussed some of the most common ways to use vectors, be sure to review the API documentation for all the many useful methods defined on `Vec<T>` by the standard library. For now, these can be found in the [source code for `Vec<T>`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/vec.sw). For example, in addition to `push`, a `pop` method removes and returns the last element, a `remove` method removes and returns the element at some chosen index within the vector, an `insert` method inserts an element at some chosen index within the vector, etc.
+现在我们已经讨论了一些使用向量的常见方法，请务必查看标准库中 `Vec<T>` 定义的所有许多有用方法的 API 文档。目前，这些可以在 [source code for `Vec<T>`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/vec.sw) 中找到。例如，除了 `push` 之外，`pop` 方法会移除并返回最后一个元素，`remove` 方法会移除并返回向量中某个选择的索引处的元素，`insert` 方法会在向量中的某个选择的索引处插入元素等。

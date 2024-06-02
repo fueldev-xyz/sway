@@ -1,15 +1,13 @@
-# Common Collections
+# 常见集合
 
-Sway’s standard library includes a number of very useful data structures called collections. Most other data types represent one specific value, but collections can contain multiple values. Unlike the built-in array and tuple types which are allocated on the "stack" and cannot grow in size, the data these collections point to is stored either on the "heap" or in contract "storage", which means the amount of data does not need to be known at compile time and can grow as the program runs. Each kind of collection has different capabilities and costs, and choosing an appropriate one for your current situation is a skill you’ll develop over time. In this chapter, we’ll discuss three collections that are used very often in Sway programs:
+Sway 标准库包含一些非常有用的数据结构，称为集合。大多数其他数据类型表示一个特定的值，但集合可以包含多个值。与内置的数组和元组类型不同，它们分配在 "堆栈" 上并且大小不可增长，这些集合指向的数据存储在 "堆" 上或合约 "存储" 中，这意味着数据量不需要在编译时知道，并且可以随着程序运行而增长。每种类型的集合具有不同的功能和成本，选择适合当前情况的集合是您将逐渐培养的技能。在本章中，我们将讨论在 Sway 程序中经常使用的三种集合：
 
-A vector on the heap allows you to store a variable number of values next to each other.
+- 在堆上的向量允许您存储可变数量的值在一起。
+- `StorageVec` 类似于在堆上的向量，但使用持久存储。
+- `StorageMap` 允许将值与特定键关联起来。
 
-A `StorageVec` is similar to a vector on the heap but uses persistent storage.
+我们将讨论如何创建和更新向量、`StorageVec` 和 `StorageMap`，以及每个集合的特点。
 
-A `StorageMap` allows you to associate a value with a particular key.
-
-We’ll discuss how to create and update a vector, `StorageVec`, and `StorageMap`, as well as what makes each special.
-
-- [Vectors on the Heap](./vec.md)
+- [堆上的向量](./vec.md)
 - [`StorageVec`](./storage_vec.md)
 - [`StorageMap`](./storage_map.md)
