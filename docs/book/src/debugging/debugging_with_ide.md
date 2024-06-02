@@ -1,30 +1,31 @@
-# Debugging with IDE
+# 使用 IDE 进行调试
 
-The `forc debug` plugin also enables line-by-line debugging of Sway unit tests in VSCode.
+`forc debug` 插件还使得在 VSCode 中对 Sway 单元测试进行逐行调试成为可能。
 
-## Installation
+## 安装
 
-1. Install the Sway VSCode extension from the [marketplace](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin).
-2. Ensure you have the forc-debug binary installed. `which forc-debug`.
-It can be installed with `fuelup component add forc-debug`.
-3. Create a `.vscode/launch.json` file with the following contents:
+1. 从 [marketplace](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin) 安装 Sway VSCode 扩展。
+2. 确保已安装 `forc-debug` 二进制文件。运行 `which forc-debug` 来检查。
+   可以使用 `fuelup component add forc-debug` 进行安装。
+3. 创建一个 `.vscode/launch.json` 文件，内容如下：
 
 ```json
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-        "type": "sway",
-        "request": "launch",
-        "name": "Debug Sway",
-        "program": "${file}"
-    }]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "sway",
+      "request": "launch",
+      "name": "Debug Sway",
+      "program": "${file}"
+    }
+  ]
 }
 ```
 
-## An example project
+## 示例工程
 
-Given this example contract:
+有以下示例合约
 
 ```sway
 contract;
@@ -55,8 +56,8 @@ fn test_multi_contract_calls() {
 }
 ```
 
-Within the sway file open in VSCode, you can set breakpoints on lines within the test or functions that it calls, and click Run -> Start Debugging to begin debugging the unit test.
+在 VSCode 中打开的 Sway 文件中，您可以在测试中的行上设置断点，或在测试调用的函数中设置断点，然后单击“Run -> Start Debugging”开始调试单元测试。
 
-This will build the sway project and run it in debug mode. The debugger will stop the VM execution when a breakpoint is hit.
+这将构建 Sway 项目并以调试模式运行它。当断点被触发时，调试器将停止 VM 执行。
 
-The debug panel will show VM registers under the Variables tab, as well as the current VM opcode where execution is suspended. You can continue execution, or use the Step Over function to step forward, instruction by instruction.
+调试面板将在“Variables”选项卡下显示 VM 寄存器，以及执行暂停的当前 VM 操作码。您可以继续执行，或使用“Step Over”功能逐步进行逐条指令执行。
