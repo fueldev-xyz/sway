@@ -1,58 +1,53 @@
-# External Code Execution
+# 外部代码执行
 
-The `std-lib` includes a function called `run_external` that allows Sway contracts to execute arbitrary external Sway code.
+`std-lib` 包含一个名为 `run_external` 的函数，允许 Sway 合约执行任意外部 Sway 代码。
 
-This functionality enables features like upgradeable contracts and
-proxies.
+此功能启用了可升级合约和代理等功能。
 
-## Upgradeable Contracts
+## 可升级合约
 
-Upgradeable contracts are designed to allow the logic of a smart contract to be updated after deployment.
+可升级合约旨在允许智能合约的逻辑在部署后进行更新。
 
-Consider this example proxy contract:
+考虑以下代理合约示例：
 
 ```sway
 {{#include ../../../../examples/upgradeable_proxy/proxy/src/main.sw:proxy}}
 ```
 
-The contract has two functions:
+该合约有两个函数：
 
-- `set_target_contract` updates the `target_contract` variable in storage with the `ContractId` of an external contract.
-- `double_input` reads the `target_contract` from storage and uses it to run external code. If the `target_contract` has a function with the same name (`double_input`), the code in the external `double_input` function will run.
-In this case, the function will return a `u64`.
+- `set_target_contract` 使用外部合约的 `ContractId` 更新存储中的 `target_contract` 变量。
+- `double_input` 从存储中读取 `target_contract` 并使用它运行外部代码。如果 `target_contract` 中有一个同名的函数（`double_input`），则将运行外部 `double_input` 函数中的代码。在这种情况下，该函数将返回一个 `u64`。
 
-Notice in the `Proxy` example above, the storage block has a `namespace` attribute. Using this attribute is considered a best practice for all proxy contracts in Sway, because it will prevent storage collisions with the implementation contract, as the implementation contract has access to both storage contexts.
+注意在上面的 `Proxy` 示例中，存储块具有 `namespace` 属性。使用此属性被认为是所有 Sway 代理合约的最佳实践，因为它可以防止与实现合约的存储冲突，因为实现合约可以访问两个存储上下文。
 
-Below is what an implementation contract could look like for this:
+下面是一个实现合约可能的示例：
 
 ```sway
 {{#include ../../../../examples/upgradeable_proxy/implementation/src/main.sw:target}}
 ```
 
-This contract has one function called `double_input`, which calculates the input value times two, updates the `value` variable in storage, and returns the new value.
+该合约有一个名为 `double_input` 的函数，该函数计算输入值的两倍，更新存储中的 `value` 变量，并返回新值。
 
-## How does this differ from calling a contract?
+## 这与直接调用合约有何不同？
 
-There are a couple of major differences between calling a contract directly and using the `run_external` method.
+直接调用合约和使用 `run_external` 方法之间有几个主要区别。
 
-First, to use `run_external`, the ABI of the external contract is not required. The proxy contract has no knowledge of the external contract except for its `ContractId`.
+首先，使用 `run_external` 时，不需要外部合约的 ABI。代理合约除了其 `ContractId` 外，对外部合约一无所知。
 
-### Upgradeable Contract Storage
+### 可升级合约存储
 
-Second, the storage context of the proxy contract is retained for the loaded code.
-This means that in the examples above, the `value` variable gets updated in the storage for the *proxy* contract.
+其次，代理合约的存储上下文保留给加载的代码。这意味着在上面的示例中，`value` 变量在 _代理_ 合约的存储中被更新。
 
-For example, if you were to read the `value` variable by directly calling the implementation contract, you would get a different result than if you read it through the proxy contract.
-The proxy contract loads the code and executes it in its own context.
+例如，如果直接调用实现合约读取 `value` 变量，您将获得与通过代理合约读取不同的结果。代理合约加载代码并在其自己的上下文中执行。
 
-## Fallback functions
+## Fallback 函数
 
-If the function name doesn't exist in the target contract but a `fallback` function does, the `fallback` function will be triggered.
+如果目标合约中不存在该函数名称，但存在 `fallback` 函数，则将触发 `fallback` 函数。
 
-> If there is no fallback function, the transaction will revert.
+> 如果没有 `fallback` 函数，交易将回滚。
 
-You can access function parameters for fallback functions using the `call_frames` module in the `std-lib`.
-For example, to access the `_foo` input parameter in the proxy function below, you can use the `called_args` method in the `fallback` function:
+您可以使用 `std-lib` 中的 `call_frames` 模块访问 `fallback` 函数的参数。例如，要在下面的代理函数中访问 `_foo` 输入参数，可以在 `fallback` 函数中使用 `called_args` 方法：
 
 ```sway
 {{#include ../../../../test/src/sdk-harness/test_projects/run_external_proxy/src/main.sw:does_not_exist_in_the_target}}
@@ -62,12 +57,12 @@ For example, to access the `_foo` input parameter in the proxy function below, y
 {{#include ../../../../test/src/sdk-harness/test_projects/run_external_target/src/main.sw:fallback}}
 ```
 
-In this case, the `does_not_exist_in_the_target` function will return `_foo * 3`.
+在这种情况下，`does_not_exist_in_the_target` 函数将返回 `_foo * 3`。
 
-## Limitations
+## 限制
 
-Some limitations of `run_external` function are:
+`run_external` 函数的一些限制是：
 
-- It can only be used with other contracts. Scripts, predicates, and library code cannot be run externally.
-- If you change the implementation contract, you must maintain the same order of previous storage variables and types, as this is what has been stored in the proxy storage.
-- You can't use the call stack in another call frame before you use `run_external`. You can only use the call stack within the call frame that contains `run_external`.
+- 它只能用于其他合约。脚本、谓词和库代码不能外部运行。
+- 如果更改实现合约，必须保持先前存储变量和类型的顺序，因为这是在代理存储中存储的内容。
+- 在使用 `run_external` 之前，不能在另一个调用帧中使用调用栈。只能在包含 `run_external` 的调用帧中使用调用栈。

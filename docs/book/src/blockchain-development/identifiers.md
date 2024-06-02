@@ -1,8 +1,8 @@
-# Identifiers
+# 标识符
 
-Addresses in Sway are similar to EVM addresses. The two major differences are:
+Sway 中的地址类似于 EVM 地址。两者的主要区别在于：
 
-1. Sway addresses are 32 bytes long (instead of 20)
-2. Sway addresses are computed with the SHA-256 hash of the public key instead of the keccak-256 hash.
+1. Sway 地址长度为 32 字节（而不是 20 字节）
+2. Sway 地址是使用公钥的 SHA-256 哈希计算而得，而不是 keccak-256 哈希。
 
-Contracts, on the other hand, are uniquely identified with a contract ID rather than an address. A contract's ID is also 32 bytes long and is calculated [here](https://fuellabs.github.io/fuel-specs/master/protocol/id/contract).
+另一方面，合约是通过合约 ID 而不是地址唯一标识的。合约的 ID 也是长度为 32 字节，并且是通过[此处](https://fuellabs.github.io/fuel-specs/master/protocol/id/contract)计算得到的。

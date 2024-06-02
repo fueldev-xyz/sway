@@ -1,199 +1,195 @@
-# Native Assets
+# 原生资产
 
-<!-- This section should explain native assets in Sway -->
-<!-- native_assets:example:start -->
-The FuelVM has built-in support for working with multiple assets.
+FuelVM 内置支持处理多种资产。
 
-## Key Differences Between EVM and FuelVM Assets
+## EVM 和 FuelVM 资产之间的主要区别
 
-### ERC-20 vs Native Asset
+### ERC-20 vs 原生资产
 
-On the EVM, Ether is the native asset. As such, sending ETH to an address or contract is an operation built into the EVM, meaning it doesn't rely on the existence of a smart contract to update balances to track ownership as with ERC-20 tokens.
+在 EVM 上，以太币是原生资产。因此，向地址或合约发送 ETH 是内置于 EVM 中的操作，这意味着它不依赖于智能合约的存在来更新余额以跟踪所有权，就像 ERC-20 代币那样。
 
-On the FuelVM, _all_ assets are native and the process for sending _any_ native asset is the same.
+在 FuelVM 上，*所有*资产都是原生资产，并且发送 _任何_ 原生资产的流程相同。
 
-While you would still need a smart contract to handle the minting and burning of assets, the sending and receiving of these assets can be done independently of the asset contract.
+尽管您仍然需要一个智能合约来处理资产的铸造和销毁，但这些资产的发送和接收可以独立于资产合约进行。
 
-Just like the EVM however, Fuel has a standard that describes a standard API for Native Assets using the Sway Language. The ERC-20 equivalent for the Sway Language is the [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md).
+然而，就像 EVM 一样，Fuel 有一个标准，描述了使用 Sway 语言的原生资产的标准 API。与 Sway 语言相对应的 ERC-20 是 [SRC-20; 原生资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)。
 
-> **NOTE** It is important to note that Fuel does not have tokens.
+> **注意** 需要注意的是，Fuel 没有代币。
 
-### ERC-721 vs Native Asset
+### ERC-721 vs 原生资产
 
-On the EVM, an ERC-721 token or NFT is a contract that contains multiple tokens which are non-fungible with one another.
+在 EVM 上，ERC-721 代币或 NFT 是一个包含多个彼此不可互换的代币的合约。
 
-On the FuelVM, the ERC-721 equivalent is a Native Asset where each asset has a supply of one. This is defined in the [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md#non-fungible-asset-restrictions) under the Non-Fungible Asset Restrictions.
+在 FuelVM 上，ERC-721 的等价物是每个资产的供应量为一的原生资产。这在 [SRC-20; 原生资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md#non-fungible-asset-restrictions) 中定义了非可互换资产限制。
 
-In practice, this means all NFTs are treated the same as any other Native Asset on Fuel. When writing Sway code, no additional cases for handling non-fungible and fungible assets are required.
+实际上，这意味着所有 NFT 都与 Fuel 上的任何其他原生资产一样对待。在编写 Sway 代码时，不需要额外处理非可互换资产和可互换资产的情况。
 
-### No Token Approvals
+### 无需代币批准
 
-An advantage Native Assets bring is that there is no need for token approvals; as with Ether on the EVM. With millions of dollars hacked every year due to misused token approvals, the FuelVM eliminates this attack vector.
+原生资产带来的一个优势是不需要代币批准；就像 EVM 上的以太币一样。由于每年因代币批准错误而被黑客攻击的金额达数百万美元，FuelVM 消除了这种攻击向量。
 
-### Asset vs Coin vs Token
+### 资产 vs 硬币 vs 代币
 
-An "Asset" is a Native Asset on Fuel and has the associated `AssetId` type. Assets are distinguishable from one another. A "Coin" represents a singular unit of an Asset. Coins of the same Asset are not distinguishable from one another.
+"资产" 是 Fuel 上的原生资产，具有关联的 `AssetId` 类型。资产是可以互相区分的。 "硬币" 表示资产的单个单位。同一资产的硬币是无法互相区分的。
 
-Fuel does not use tokens like other ecosystems such as Ethereum and uses Native Assets with a UTXO design instead.
+Fuel 不像以太坊等其他生态系统一样使用代币，而是使用具有 UTXO 设计的原生资产。
 
-## The `AssetId` type
+## `AssetId` 类型
 
-The `AssetId` type represents any Native Asset on Fuel. An `AssetId` is used for interacting with an asset on the network.
+`AssetId` 类型表示 Fuel 上的任何原生资产。`AssetId` 用于与网络上的资产进行交互。
 
-The `AssetId` of any Native Asset on Fuel is calculated by taking the SHA256 hash digest of the originating `ContractId` that minted the asset and a `SubId` i.e. `sha256((contract_id, sub_id))`.
+任何 Fuel 上的原生资产的 `AssetId` 是通过取铸造资产的起始 `ContractId` 和 `SubId` 的 SHA256 哈希摘要来计算的，即 `sha256((contract_id, sub_id))`。
 
-### Creating a New `AssetId`
+### 创建新的 `AssetId`
 
-There are 3 ways to instantiate a new `AssetId`:
+有三种实例化新 `AssetId` 的方法：
 
-#### Default
+#### 默认
 
-When a contract will only ever mint a single asset, it is recommended to use the `DEFAULT_ASSET_ID` sub id. This is referred to as the default asset of a contract.
+当一个合约只会铸造单个资产时，建议使用 `DEFAULT_ASSET_ID` 子 ID。这被称为合约的默认资产。
 
-To get the default asset from an internal contract call, call the `default()` function:
+要从内部合约调用中获取默认资产，请调用 `default()` 函数：
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:default_asset_id}}
 ```
 
-#### New
+#### 新建
 
-If a contract mints multiple assets or if the asset has been minted by an external contract, the `new()` function will be needed. The `new()` function takes the `ContractId` of the contract which minted the token as well as a `SubId`.
+如果一个合约铸造多个资产或者资产已经由外部合约铸造，将需要使用 `new()` 函数。`new()` 函数接受铸造代币的合约的 `ContractId`，以及一个 `SubId`。
 
-To create a new `AssetId` using a `ContractId` and `SubId`, call the `new()` function:
+要使用 `ContractId` 和 `SubId` 创建新的 `AssetId`，请调用 `new()` 函数：
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:new_asset_id}}
 ```
 
-#### From
+#### 来源
 
-In the case where the `b256` value of an asset is already known, you may call the `from()` function with the `b256` value.
+如果已知资产的 `b256` 值，则可以调用 `from()` 函数并传入该 `b256` 值。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:from_asset_id}}
 ```
 
-## The `SubId` type
+## `SubId` 类型
 
-The SubId is used to differentiate between different assets that are created by the same contract. The `SubId` is a `b256` value.
+SubId 用于区分由同一合约创建的不同资产。`SubId` 是一个 `b256` 值。
 
-When creating a single new asset on Fuel, we recommend using the `DEFAULT_SUB_ID` or `SubId::zero()`.
+在 Fuel 上创建单个新资产时，我们建议使用 `DEFAULT_SUB_ID` 或 `SubId::zero()`。
 
-## The Base Asset
+## 基础资产
 
-On the Fuel Network, the base asset is Ether. This is the only asset on the Fuel Network that does not have a `SubId`.
+在 Fuel 网络上，基础资产是以太币。这是 Fuel 网络上唯一没有 `SubId` 的资产。
 
-The Base Asset can be returned anytime by calling the `base()` function of the `AssetId` type.
+可以通过调用 `AssetId` 类型的 `base()` 函数随时返回基础资产。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:base_asset}}
 ```
 
-## Basic Native Asset Functionality
+## 基本原生资产功能
 
-### Minting A Native Asset
+### 铸造原生资产
 
-To mint a new asset, the `std::asset::mint()` function must be called internally within a contract. A `SubId` and amount of coins must be provided. These newly minted coins will be owned by the contract which minted them. To mint another asset from the same contract, replace the `DEFAULT_SUB_ID` with your desired `SubId`.
+要铸造新资产，必须在合约内部调用 `std::asset::mint()` 函数。必须提供一个 `SubId` 和硬币数量。这些新铸造的硬币将由铸造它们的合约拥有。要从同一合约铸造另一个资产，请用您想要的 `SubId` 替换 `DEFAULT_SUB_ID`。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:mint_asset}}
 ```
 
-You may also mint an asset to a specific entity with the `std::asset::mint_to()` function. Be sure to provide a target `Identity` that will own the newly minted coins.
+您还可以使用 `std::asset::mint_to()` 函数将资产铸造到特定的实体。请务必提供一个将拥有新铸造硬币的目标 `Identity`。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:mint_to_asset}}
 ```
 
-If you intend to allow external users to mint assets using your contract, the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) defines a standard API for minting assets. The [Sway-Libs Asset Library](https://fuellabs.github.io/sway-libs/book/asset/supply.html) also provides an additional library to support implementations of the SRC-3 Standard into your contract.
+如果您打算允许外部用户使用您的合约铸造资产，[SRC-3; 铸造和销毁标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) 定义了一个标准的 API 用于铸造资产。[Sway-Libs 资产库](https://fuellabs.github.io/sway-libs/book/asset/supply.html) 还提供了一个额外的库来支持将 SRC-3 标准实现到您的合约中。
 
-### Burning a Native Asset
+### 销毁原生资产
 
-To burn an asset, the `std::asset::burn()` function must be called internally from the contract which minted them. The `SubId` used to mint the coins and amount must be provided. The burned coins must be owned by the contract. When an asset is burned it doesn't exist anymore.
+要销毁资产，必须从铸造它们的合约内部调用 `std::asset::burn()` 函数。必须提供用于铸造硬币的 `SubId` 和数量。被销毁的硬币必须由合约拥有。当资产被销毁时，它不再存在。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:burn_asset}}
 ```
 
-If you intend to allow external users to burn assets using your contract, the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) defines a standard API for burning assets. The [Sway-Libs Asset Library](https://fuellabs.github.io/sway-libs/book/asset/supply.html) also provides an additional library to support implementations of the SRC-3 Standard into your contract.
+如果您打算允许外部用户使用您的合约销毁资产，[SRC-3; 铸造和销毁标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) 定义了一个标准的 API 用于销毁资产。[Sway-Libs 资产库](https://fuellabs.github.io/sway-libs/book/asset/supply.html) 还提供了一个额外的库来支持将 SRC-3 标准实现到您的合约中。
 
-### Transfer a Native Asset
+### 转移原生资产
 
-To internally transfer a Native Asset, the `std::asset::transfer()` function must be called. A target `Identity` or user must be provided as well as the `AssetId` of the asset and an amount.
+要内部转移原生资产，必须调用 `std::asset::transfer()` 函数。还必须提供目标 `Identity` 或用户以及资产的 `AssetId` 和数量。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:transfer_asset}}
 ```
 
-### Native Asset And Transactions
+### 原生资产和交易
 
-#### Getting The Transaction Asset
+#### 获取交易资产
 
-To query for the Native Asset sent in a transaction, you may call the `std::call_frames::msg_asset_id()` function.
+要查询交易中发送的原生资产，可以调用 `std::call_frames::msg_asset_id()` 函数。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:msg_asset_id}}
 ```
 
-#### Getting The Transaction Amount
+#### 获取交易数量
 
-To query for the amount of coins sent in a transaction, you may call the `std::context::msg_amount()` function.
+要查询交易中发送的硬币数量，可以调用 `std::context::msg_amount()` 函数。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:msg_amount}}
 ```
 
-### Native Assets and Contracts
+### 原生资产和合约
 
-#### Checking A Contract's Balance
+#### 检查合约余额
 
-To internally check a contract's balance, call the `std::context::this_balance()` function with the corresponding `AssetId`.
+要内部检查合约的余额，请使用相应的 `AssetId` 调用 `std::context::this_balance()` 函数。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:this_balance}}
 ```
 
-To check the balance of an external contract, call the `std::context::balance_of()` function with the corresponding `AssetId`.
+要检查外部合约的余额，请使用相应的 `AssetId` 调用 `std::context::balance_of()` 函数。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:balance_of}}
 ```
 
-> **NOTE** Due to the FuelVM's UTXO design, balances of `Address`'s cannot be returned in the Sway Language. This must be done off-chain using the SDK.
+> **注意** 由于 FuelVM 的 UTXO 设计，无法在 Sway 语言中返回 `Address` 的余额。这必须在链下使用 SDK 完成。
 
-#### Receiving Native Assets In A Contract
+#### 在合约中接收原生资产
 
-By default, a contract may not receive a Native Asset in a contract call. To allow transferring of assets to the contract, add the `#[payable]` attribute to the function.
+默认情况下，合约可能不会在合约调用中接收原生资产。要允许向合约转移资产，请在函数中添加 `#[payable]` 属性。
 
 ```sway
 {{#include ../../../../examples/native_asset/src/main.sw:payable}}
 ```
 
-## Native Asset Standards
+## 原生资产标准
 
-There are a number of standards developed to enable further functionality for Native Assets and help cross contract functionality. Information on standards can be found in the [Sway Standards Repo](https://github.com/FuelLabs/sway-standards).
+已开发了许多标准以实现原生资产的更多功能，并帮助跨合约功能。有关标准的信息可以在 [Sway 标准库](https://github.com/FuelLabs/sway-standards) 中找到。
 
-We currently have the following standards for Native Assets:
+我们目前针对原生资产有以下标准：
 
-- [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) defines the implementation of a standard API for Native Assets using the Sway Language.
-- [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) is used to enable mint and burn functionality for Native Assets.
-- [SRC-7; Arbitrary Asset Metadata Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) is used to store metadata for Native Assets.
-- [SRC-6; Vault Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-6.md) defines the implementation of a standard API for asset vaults developed in Sway.
+- [SRC-20; 原生资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) 定义了使用 Sway 语言实现原生资产的标准 API。
+- [SRC-3; 铸造和销毁标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 用于启用原生资产的铸造和销毁功能。
+- [SRC-7; 任意资产元数据标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 用于存储原生资产的元数据。
+- [SRC-6; 保险库标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-6.md) 定义了使用 Sway 开发的资产保险库的标准 API。
 
-## Native Asset Libraries
+## 原生资产库
 
-Additional Libraries have been developed to allow you to quickly create an deploy dApps that follow the [Sway Standards](https://github.com/FuelLabs/sway-standards).
+已开发了其他库，允许您快速创建并部署符合 [Sway 标准](https://github.com/FuelLabs/sway-standards) 的 dApps。
 
-- [Asset Library](https://fuellabs.github.io/sway-libs/book/asset/index.html) provides functionality to implement the [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7; Arbitrary Asset Metadata Standard](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
+- [资产库](https://fuellabs.github.io/sway-libs/book/asset/index.html) 提供了实现 [SRC-20; 原生资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)、[SRC-3; 铸造和销毁标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 和 [SRC-7; 任意资产元数据标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 的功能。
 
-<!-- native_assets:example:end -->
+## 单一原生资产示例
 
-## Single Native Asset Example
+在这个完全详细的示例中，我们展示了一个铸造单一资产的原生资产合约。这相当于以太坊中的 ERC-20 标准使用。请注意，没有代币批准功能。
 
-In this fully fleshed out example, we show a native asset contract which mints a single asset. This is the equivalent to the ERC-20 Standard use in Ethereum. Note there are no token approval functions.
-
-It implements the [SRC-20; Native Asset](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3; Mint and Burn](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-5; Ownership](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) standards. It does not use any external libraries.
+它实现了 [SRC-20; 原生资产](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)、[SRC-3; 铸造和销毁](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 和 [SRC-5; 拥有权](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) 标准。它不使用任何外部库。
 
 ```sway
 // ERC20 equivalent in Sway.
@@ -331,11 +327,11 @@ fn require_access_owner() {
 }
 ```
 
-## Multi Native Asset Example
+## 多种原生资产示例
 
-In this fully fleshed out example, we show a native asset contract which mints multiple assets. This is the equivalent to the ERC-1155 Standard use in Ethereum. Note there are no token approval functions.
+在这个完全详细的示例中，我们展示了一个铸造多种资产的原生资产合约。这相当于以太坊中的 ERC-1155 标准使用。请注意，没有代币批准功能。
 
-It implements the [SRC-20; Native Asset](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3; Mint and Burn](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-5; Ownership](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) standards. It does not use any external libraries.
+它实现了 [SRC-20; 原生资产](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)、[SRC-3; 铸造和销毁](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 和 [SRC-5; 拥有权](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) 标准。它不使用任何外部库。
 
 ```sway
 // ERC1155 equivalent in Sway.
@@ -386,7 +382,7 @@ impl SRC20 for Contract {
     fn name(asset: AssetId) -> Option<String> {
         storage.name.get(asset).read_slice()
     }
-    
+
     #[storage(read)]
     fn symbol(asset: AssetId) -> Option<String> {
         storage.symbol.get(asset).read_slice()
@@ -412,13 +408,13 @@ impl SRC3 for Contract {
         storage.total_supply.insert(asset_id, current_supply + amount);
         mint_to(recipient, sub_id, amount);
     }
-    
+
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
         require_access_owner();
         let asset_id = AssetId::new(contract_id(), sub_id);
         require(this_balance(asset_id) >= amount, "not-enough-coins");
-        
+
         let supply = storage.total_supply.get(asset_id).try_read();
         let current_supply = supply.unwrap_or(0);
         storage.total_supply.insert(asset_id, current_supply - amount);
@@ -429,7 +425,7 @@ impl SRC3 for Contract {
 abi MultiAsset {
     #[storage(read, write)]
     fn constructor(owner_: Identity);
-    
+
     #[storage(read, write)]
     fn set_name(asset: AssetId, name: String);
 
@@ -446,7 +442,7 @@ impl MultiAsset for Contract {
         require(storage.owner.read() == State::Uninitialized, "owner-initialized");
         storage.owner.write(State::Initialized(owner_));
     }
-    
+
     #[storage(read, write)]
     fn set_name(asset: AssetId, name: String) {
         require_access_owner();

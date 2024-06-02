@@ -1,66 +1,63 @@
-# Storage
+# 存储
 
-<!-- This section should explain storage in Sway -->
-<!-- storage:example:start -->
-When developing a [smart contract](../sway-program-types/smart_contracts.md), you will typically need some sort of persistent storage. In this case, persistent storage, often just called _storage_ in this context, is a place where you can store values that are persisted inside the contract itself. This is in contrast to a regular value in _memory_, which disappears after the contract exits.
+在开发[智能合约](../sway-program-types/smart_contracts.md)时，通常需要某种形式的持久性存储。在这种情况下，持久性存储，通常在此上下文中称为 _存储_，是一个可以存储在合约内部并持久存在的值的地方。这与 _内存_ 中的常规值形成对比，后者在合约退出后消失。
 
-Put in conventional programming terms, contract storage is like saving data to a hard drive. That data is saved even after the program that saved it exits. That data is persistent. Using memory is like declaring a variable in a program: it exists for the duration of the program and is non-persistent.
+从传统编程角度来看，合约存储就像将数据保存到硬盘上一样。这些数据在保存它的程序退出后仍然存在。这些数据是持久的。使用内存就像在程序中声明一个变量：它存在于程序的整个运行期间，是非持久的。
 
-Some basic use cases of storage include declaring an owner address for a contract and saving balances in a wallet.
-<!-- storage:example:end -->
+一些存储的基本用例包括为合约声明所有者地址和在钱包中保存余额。
 
-## Storage Accesses Via the `storage` Keyword
+## 通过 `storage` 关键字访问存储
 
-Declaring variables in storage requires a `storage` block that contains a list of all your variables, their types, and their initial values. The initial value can be any expression that can be evaluated to a constant during compilation, as follows:
+在存储中声明变量需要一个 `storage` 块，其中包含所有变量、它们的类型和它们的初始值的列表。初始值可以是在编译期间可以计算为常量的任何表达式，如下所示：
 
 ```sway
 {{#include ../../../../examples/basic_storage_variables/src/main.sw:basic_storage_declaration}}
 ```
 
-To write into a storage variable, you need to use the `storage` keyword as follows:
+要写入存储变量，您需要使用 `storage` 关键字，如下所示：
 
 ```sway
 {{#include ../../../../examples/basic_storage_variables/src/main.sw:basic_storage_write}}
 ```
 
-To read a storage variable, you also need to use the `storage` keyword. You may use `read()` or `try_read()`, however we recommend using `try_read()` for additional safety.
+要读取存储变量，您还需要使用 `storage` 关键字。您可以使用 `read()` 或 `try_read()`，但我们建议使用 `try_read()` 进行额外的安全性。
 
 ```sway
 {{#include ../../../../examples/basic_storage_variables/src/main.sw:basic_storage_read}}
 ```
 
-## Storing Structs
+## 存储结构体
 
-To store a struct in storage, each variable must be assigned in the `storage` block. This can be either my assigning the fields individually or using a public [constructor](../basics/methods_and_associated_functions.md#constructors) that can be evaluated to a constant during compilation.
+要在存储中存储结构体，必须在 `storage` 块中为每个变量分配值。这可以通过分配字段或使用可以在编译期间评估为常量的公共[构造函数](../basics/methods_and_associated_functions.md#constructors)来实现。
 
 ```sway
 {{#include ../../../../examples/struct_storage_variables/src/main.sw:struct_storage_declaration}}
 ```
 
-You may write to both fields of a struct and the entire struct as follows:
+您可以同时写入结构体的两个字段和整个结构体，如下所示：
 
 ```sway
 {{#include ../../../../examples/struct_storage_variables/src/main.sw:struct_storage_write}}
 ```
 
-The same applies to reading structs from storage, where both the individual and struct as a whole may be read as follows:
+同样的方法也适用于从存储中读取结构体，可以读取单个字段和整个结构体，如下所示：
 
 ```sway
 {{#include ../../../../examples/struct_storage_variables/src/main.sw:struct_storage_read}}
 ```
 
-## Common Storage Collections
+## 常见的存储集合
 
-We support the following common storage collections:
+我们支持以下常见的存储集合：
 
 - `StorageMap<K, V>`
 - `StorageVec<T>`
 - `StorageBytes`
 - `StorageString`
 
-Please note that these types are not initialized during compilation. This means that if you try to access a key from a storage map before the storage has been set, for example, the call will revert.
+请注意，这些类型在编译期间不会被初始化。这意味着如果您尝试在设置存储之前从存储映射中访问键，例如，该调用将导致回滚。
 
-Declaring these variables in storage requires a `storage` block as follows:
+在存储中声明这些变量需要一个 `storage` 块，如下所示：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:advanced_storage_declaration}}
@@ -68,15 +65,15 @@ Declaring these variables in storage requires a `storage` block as follows:
 
 ### `StorageMaps<K, V>`
 
-Generic storage maps are available in the standard library as `StorageMap<K, V>` which have to be defined inside a `storage` block and allow you to call `insert()` and `get()` to insert values at specific keys and get those values respectively. Refer to [Storage Maps](../common-collections/storage_map.md) for more information about `StorageMap<K, V>`.
+标准库中提供了通用的存储映射，称为 `StorageMap<K, V>`，必须在 `storage` 块中定义，允许您调用 `insert()` 和 `get()` 分别在特定键处插入值和获取这些值。有关 `StorageMap<K, V>` 的更多信息，请参阅[存储映射](../common-collections/storage_map.md)。
 
-To write to a storage map, call either the `insert()` or `try_insert()` functions as follows:
+要写入存储映射，请调用 `insert()` 或 `try_insert()` 函数，如下所示：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:map_storage_write}}
 ```
 
-The following demonstrates how to read from a storage map:
+以下示例演示了如何从存储映射中读取：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:map_storage_read}}
@@ -84,15 +81,15 @@ The following demonstrates how to read from a storage map:
 
 ### `StorageVec<T>`
 
-Generic storage vectors are available in the standard library as `StorageVec<T>` which have to be defined inside a `storage` block and allow you to call `push()` and `pop()` to push and pop values from a vector respectively. Refer to [Storage Vector](../common-collections/storage_vec.md) for more information about `StorageVec<T>`.
+标准库中提供了通用的存储向量，称为 `StorageVec<T>`，必须在 `storage` 块中定义，允许您调用 `push()` 和 `pop()` 来分别从向量中推送和弹出值。有关 `StorageVec<T>` 的更多信息，请参阅[存储向量](../common-collections/storage_vec.md)。
 
-The following demonstrates how to write to a `StorageVec<T>`:
+以下示例演示了如何写入 `StorageVec<T>`：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:vec_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageVec<T>`:
+以下示例演示了如何从 `StorageVec<T>` 中读取：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:vec_storage_read}}
@@ -100,15 +97,15 @@ The following demonstrates how to read from a `StorageVec<T>`:
 
 ### `StorageBytes`
 
-Storage of `Bytes` is available in the standard library as `StorageBytes` which have to be defined inside a `storage` block. `StorageBytes` cannot be manipulated in the same way a `StorageVec<T>` or `StorageMap<K, V>` can but stores bytes more efficiently thus reducing gas. Only the entirety of a `Bytes` may be read/written to storage. This means any changes would require loading the entire `Bytes` to the heap, making changes, and then storing it once again. If frequent changes are needed, a `StorageVec<u8>` is recommended.
+`StorageBytes` 是标准库中提供的一种存储 `Bytes` 的类型，必须在 `storage` 块中定义。`StorageBytes` 无法像 `StorageVec<T>` 或 `StorageMap<K, V>` 那样进行操纵，但以更有效的方式存储字节，从而减少 gas 消耗。只能读取/写入 `Bytes` 的全部内容。这意味着任何更改都需要将整个 `Bytes` 加载到堆中，进行更改，然后再次存储它。如果需要频繁更改，建议使用 `StorageVec<u8>`。
 
-The following demonstrates how to write to a `StorageBytes`:
+以下演示了如何写入 `StorageBytes`：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:bytes_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageBytes`:
+以下演示了如何从 `StorageBytes` 中读取：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:bytes_storage_read}}
@@ -116,20 +113,20 @@ The following demonstrates how to read from a `StorageBytes`:
 
 ### `StorageString`
 
-Storage of `String` is available in the standard library as `StorageString` which have to be defined inside a `storage` block. `StorageString` cannot be manipulated in the same way a `StorageVec<T>` or `StorageMap<K, V>`. Only the entirety of a `String` may be read/written to storage.
+标准库中提供了 `String` 的存储类型 `StorageString`，必须在 `storage` 块中定义。`StorageString` 无法像 `StorageVec<T>` 或 `StorageMap<K, V>` 那样进行操纵。只能读取/写入 `String` 的全部内容。
 
-The following demonstrates how to write to a `StorageString`:
+以下演示了如何写入 `StorageString`：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:string_storage_write}}
 ```
 
-The following demonstrates how to read from a `StorageString`:
+以下演示了如何从 `StorageString` 中读取：
 
 ```sway
 {{#include ../../../../examples/advanced_storage_variables/src/main.sw:string_storage_read}}
 ```
 
-## Advanced Storage
+## 高级存储
 
-For more advanced storage techniques please refer to the [Advanced Storage](../advanced/advanced_storage.md) page.
+有关更高级的存储技术，请参阅[高级存储](../advanced/advanced_storage.md)页面。
