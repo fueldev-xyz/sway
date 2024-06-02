@@ -1,6 +1,6 @@
-# Troubleshooting
+# 故障排除
 
-First, confirm you are running the most recent version:
+首先，确认你正在运行最新版本：
 
 ```sh
 fuelup toolchain install latest
@@ -8,40 +8,40 @@ fuelup update
 forc-lsp --version
 ```
 
-Second, confirm that your `$PATH` resolves to the `forc-lsp` binary in `$HOME/.fuelup/bin`.
+其次，确认你的 `$PATH` 解析到 `$HOME/.fuelup/bin` 中的 `forc-lsp` 二进制文件。
 
 ```sh
 which forc-lsp
 ```
 
-## Slow Performance
+## 性能慢
 
-If you are experiencing slow performance, you can try the following:
+如果你遇到性能慢的问题，可以尝试以下操作：
 
-Follow [the steps above](#troubleshooting) to ensure you are running the most recent version.
+按照[上面的步骤](#troubleshooting)确保你正在运行最新版本。
 
-Then, make sure you only have the most recent version of the LSP server running.
+然后，确保你只运行了最新版本的 LSP 服务器。
 
 ```sh
 pkill forc-lsp
 ```
 
-### Large projects
+### 大型项目
 
-Sway projects with ten or more Sway files are likely to have slower LSP performance. We are working on better support for large projects.
+具有十个或更多 Sway 文件的项目可能会导致 LSP 性能较慢。我们正在努力改进对大型项目的支持。
 
-In the meantime, if it's too slow, you can disable the LSP server entirely with the `sway-lsp.diagnostic.disableLsp` setting. The extension will still provide basic syntax highlighting, command palettes, as well as the Sway debugger, but all other language features will be disabled.
+在此期间，如果速度太慢，你可以通过设置 `sway-lsp.diagnostic.disableLsp` 来完全禁用 LSP 服务器。插件仍将提供基本的语法高亮、命令面板以及 Sway 调试器，但所有其他语言功能将被禁用。
 
-## Server Logs
+## 服务器日志
 
-You can you enable verbose logging of the LSP server.
+你可以启用 LSP 服务器的详细日志记录。
 
-In VSCode, this is under the setting:
+在 VSCode 中，这是在设置中的：
 
 ```json
 "sway-lsp.trace.server": "verbose"
 ```
 
-Once enabled, you can find this in the output window under Sway Language Server.
+启用后，你可以在输出窗口中找到 Sway Language Server 下的日志。
 
-For other editors, see [Installation](./installation.md) for links to documentation.
+对于其他编辑器，请参阅[安装](./installation.md)以获取文档链接。

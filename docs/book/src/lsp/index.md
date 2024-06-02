@@ -1,15 +1,15 @@
 # Sway LSP
 
-Welcome to the documentation for Sway LSP, the language server designed specifically for the Sway programming language. This documentation serves as a comprehensive guide to help you understand and utilize the powerful features provided by Sway LSP.
+欢迎来到 Sway LSP 的文档，这是专为 Sway 编程语言设计的语言服务器。本文档旨在作为一个全面的指南，帮助您了解和利用 Sway LSP 提供的强大功能。
 
-Sway LSP is built on the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP), a standardized protocol for enabling rich programming language support in editor and IDE environments. It acts as a bridge between your favorite code editor or integrated development environment and the Sway programming language, offering advanced semantic analysis and a wide range of features to enhance your development experience.
+Sway LSP 基于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP)，这是一种标准化的协议，用于在编辑器和集成开发环境中实现丰富的编程语言支持。它充当您喜爱的代码编辑器或集成开发环境与 Sway 编程语言之间的桥梁，提供高级语义分析和广泛的功能，以增强您的开发体验。
 
-With Sway LSP, you can expect a seamless and efficient coding experience while working with the Sway programming language. It provides intelligent code completion, precise symbol navigation, type information, and other smart features that empower you to write clean and error-free code. By leveraging the power of Sway LSP, you can increase productivity, reduce debugging time, and write high-quality code with confidence.
+通过 Sway LSP，您可以期待在使用 Sway 编程语言时获得无缝高效的编码体验。它提供智能代码补全、精确的符号导航、类型信息和其他智能功能，使您能够编写干净且无错误的代码。通过充分利用 Sway LSP 的功能，您可以提高生产效率、减少调试时间，并自信地编写高质量的代码。
 
-In this documentation, you will find detailed information about how to set up Sway LSP in your preferred code editor or IDE, configure its settings to match your coding style, and take advantage of its various features. We will guide you through the installation process, provide examples of typical configuration setups, and walk you through the usage of each feature supported by Sway LSP.
+在本文档中，您将找到有关如何在您喜爱的代码编辑器或集成开发环境中设置 Sway LSP、配置其设置以匹配您的编码风格，并利用其各种功能的详细信息。我们将指导您完成安装过程，提供典型配置设置的示例，并引导您了解 Sway LSP 支持的每个功能的使用方法。
 
-Whether you are a beginner or an experienced Sway developer, this documentation aims to be your go-to resource for understanding and maximizing the capabilities of Sway LSP. So let's dive in and unlock the full potential of the Sway programming language with Sway LSP!
+无论您是初学者还是经验丰富的 Sway 开发人员，本文档都旨在成为您理解和最大化 Sway LSP 能力的首选资源。让我们开始探索，并解锁 Sway LSP 带来的全部潜力！
 
-- [Installation](./installation.md)
-- [Features](./features.md)
-- [Troubleshooting](./troubleshooting.md)
+- [安装](./installation.md)
+- [功能特性](./features.md)
+- [故障排除](./troubleshooting.md)
