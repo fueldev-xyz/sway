@@ -1,10 +1,10 @@
-# Liquidity Pool Example
+# 流动性池示例
 
-All contracts in Fuel can mint and burn their own native asset. Contracts can also receive and transfer any native asset including their own. Internal balances of all native assets pushed through calls or minted by the contract are tracked by the FuelVM and can be queried at any point using the `balance_of` function from the `std` library. Therefore, there is no need for any manual accounting of the contract's balances using persistent storage.
+在 Fuel 中，所有的合约都可以铸造和销毁自己的本地资产。合约还可以接收和转移任何本地资产，包括它们自己的资产。通过调用推送的所有本地资产或由合约铸造的本地资产的内部余额都由 FuelVM 跟踪，并且可以在任何时候使用 `std` 库中的 `balance_of` 函数查询。因此，不需要使用持久存储手动记录合约的余额。
 
-The `std` library provides handy methods for accessing Fuel's native asset operations.
+`std` 库提供了便利的方法来访问 Fuel 的本地资产操作。
 
-In this example, we show a basic liquidity pool contract minting its own native asset LP asset.
+在这个例子中，我们展示了一个基本的流动性池合约，铸造了自己的本地资产 LP 资产。
 
 ```sway
 {{#include ../../../../examples/liquidity_pool/src/main.sw}}

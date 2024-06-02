@@ -1,6 +1,6 @@
-# Counter
+# 计数器
 
-The following is a simple example of a contract which implements a counter. Both the `initialize_counter()` and `increment_counter()` ABI methods return the currently set value.
+以下是一个简单的合约示例，实现了一个计数器。`initialize_counter()` 和 `increment_counter()` ABI 方法都返回当前设置的值。
 
 ```bash
 forc template --template-name counter my_counter_project

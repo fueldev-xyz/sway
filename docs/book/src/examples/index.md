@@ -1,10 +1,10 @@
-# Example
+# 示例
 
-Some basic example contracts to see how Sway and Forc work.
+一些基本的示例合约，以了解 Sway 和 Forc 的工作原理。
 
-- [Counter](./counter.md)
+- [计数器](./counter.md)
 - [`FizzBuzz`](./fizzbuzz.md)
-- [Wallet Smart Contract](./wallet_smart_contract.md)
-- [Liquidity Pool](./wallet_smart_contract.md)
+- [钱包智能合约](./wallet_smart_contract.md)
+- [流动性池](./wallet_smart_contract.md)
 
-Additional examples can be found in the [Sway Applications](https://github.com/FuelLabs/sway-applications/tree/master) repository.
+更多示例可以在 [Sway 应用](https://github.com/FuelLabs/sway-applications/tree/master) 仓库中找到。

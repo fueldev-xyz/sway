@@ -1,8 +1,8 @@
 # `FizzBuzz`
 
-This example is not the traditional [`FizzBuzz`](https://en.wikipedia.org/wiki/Fizz_buzz#Programming); instead it is the smart contract version! A script can call the `fizzbuzz` ABI method of this contract with some `u64` value and receive back the result as an `enum`.
+这个示例不是传统的 [`FizzBuzz`](https://en.wikipedia.org/wiki/Fizz_buzz#Programming)；相反，它是智能合约版本！一个脚本可以调用这个合约的 `fizzbuzz` ABI 方法，传入一个 `u64` 值，并以 `enum` 的形式接收结果。
 
-The format for custom structs and enums such as `FizzBuzzResult` will be automatically included in the ABI JSON so that off-chain code can handle the encoded form of the returned data.
+自定义结构体和枚举类型的格式，比如 `FizzBuzzResult`，会自动包含在 ABI JSON 中，以便链下代码可以处理返回数据的编码形式。
 
 ```sway
 {{#include ../../../../examples/fizzbuzz/src/main.sw}}
