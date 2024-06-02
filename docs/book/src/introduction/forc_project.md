@@ -1,15 +1,16 @@
 # A Forc Project
 
-To initialize a new project with Forc, use `forc new`:
+要使用 Forc 初始化一个新项目，使用 `forc new`：
 
 ```sh
 forc new my-fuel-project
 ```
 
-Here is the project that Forc has initialized:
+这是 Forc 初始化的项目：
 
 <!-- This section should show the tree for a new forc project -->
 <!-- tree:example:start -->
+
 ```console
 $ cd my-fuel-project
 $ tree .
@@ -17,14 +18,17 @@ $ tree .
 └── src
     └── main.sw
 ```
+
 <!-- tree:example:end -->
 
 <!-- This section should explain the `Forc.toml` file -->
 <!-- forc_toml:example:start -->
-`Forc.toml` is the _manifest file_ (similar to `Cargo.toml` for Cargo or `package.json` for Node), and defines project metadata such as the project name and dependencies.
+
+`Forc.toml` 是 _清单文件_（类似于 Cargo 的 `Cargo.toml` 或 Node 的 `package.json`），定义了项目元数据，如项目名称和依赖项。
+
 <!-- forc_toml:example:end -->
 
-For additional information on dependency management, see: [here](../forc/dependencies.md).
+有关依赖管理的附加信息，请参阅：[此处](../forc/dependencies.md)。
 
 ```toml
 [project]
@@ -36,7 +40,7 @@ name = "my-fuel-project"
 [dependencies]
 ```
 
-Here are the contents of the only Sway file in the project, and the main entry point, `src/main.sw`:
+这是项目中唯一的 Sway 文件和主入口点 `src/main.sw` 的内容：
 
 ```sway
 contract;
@@ -52,9 +56,9 @@ impl MyContract for Contract {
 }
 ```
 
-The project is a _contract_, one of four different project types. For additional information on different project types, see [here](../sway-program-types/index.md).
+该项目是一个 _合约_，是四种不同项目类型之一。有关不同项目类型的其他信息，请参阅[此处](../sway-program-types/index.md)。
 
-We now compile our project with `forc build`, passing the flag `--asm final` to view the generated assembly:
+现在我们使用 `forc build` 编译我们的项目，并传递 `--asm final` 标志来查看生成的汇编代码：
 
 ```console
 $ forc build --asm final

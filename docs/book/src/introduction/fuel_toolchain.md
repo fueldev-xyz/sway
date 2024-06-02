@@ -1,26 +1,24 @@
-# The Fuel Toolchain
+# Fuel 工具链
 
-The Fuel toolchain consists of several components.
+Fuel 工具链由几个组件组成。
 
 ## Forc (`forc`)
 
-The "Fuel Orchestrator" [Forc](https://github.com/FuelLabs/sway/tree/master/forc) is our equivalent of Rust's [Cargo](https://doc.rust-lang.org/cargo/). It is the primary entry point for creating, building, testing, and deploying Sway projects.
+"Fuel 编排器" [Forc](https://github.com/FuelLabs/sway/tree/master/forc) 是我们等价于 Rust 的 [Cargo](https://doc.rust-lang.org/cargo/)。它是创建、构建、测试和部署 Sway 项目的主要入口点。
 
-## Sway Language Server (`forc-lsp`)
+## Sway 语言服务器 (`forc-lsp`)
 
-The Sway Language Server `forc-lsp` is provided to expose features to IDEs. [Installation instructions](../lsp/installation.md).
+Sway 语言服务器 `forc-lsp` 用于向集成开发环境暴露功能。[安装说明](../lsp/installation.md)。
 
-## Sway Formatter (`forc-fmt`)
+## Sway 格式化器 (`forc-fmt`)
 
-A canonical formatter is provided with `forc-fmt`. [Installation instructions](./getting_started.md). It can be run manually with
+`forc-fmt` 提供了一个标准的格式化器。[安装说明](./getting_started.md)。它可以通过以下方式手动运行：
 
 ```sh
 forc fmt
 ```
 
-The [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin) will
-automatically format Sway files with `forc-fmt` on save, though you might have to explicitly set the Sway plugin as the
-default formatter, like this:
+[Visual Studio Code 插件](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin)在保存时会自动使用 forc-fmt 格式化 Sway 文件，但你可能需要明确将 Sway 插件设置为默认格式化程序，像这样：
 
 ```json
 "[sway]": {
@@ -28,6 +26,6 @@ default formatter, like this:
 }
 ```
 
-## Fuel Core (`fuel-core`)
+## Fuel 核心 (`fuel-core`)
 
-An implementation of the Fuel protocol, [Fuel Core](https://github.com/FuelLabs/fuel-core), is provided together with the _Sway toolchain_ to form the _Fuel toolchain_. [The Rust SDK](https://github.com/FuelLabs/fuels-rs) will automatically start and stop an instance of the node during tests, so there is no need to manually run a node unless using Forc directly without the SDK.
+提供了 Fuel 协议的一种实现，[Fuel Core](https://github.com/FuelLabs/fuel-core)，它与 _Sway 工具链_ 一起组成了 _Fuel 工具链_。[Rust SDK](https://github.com/FuelLabs/fuels-rs) 在测试期间将自动启动和停止节点实例，因此除非直接使用 Forc 而不使用 SDK，否则无需手动运行节点。
