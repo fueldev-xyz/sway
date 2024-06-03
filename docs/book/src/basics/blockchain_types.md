@@ -9,7 +9,7 @@ Sway 从根本上讲是一种区块链语言，它提供了一系列针对区块
 <!-- 此部分应解释 `Address` 类型 -->
 <!-- address:example:start -->
 
-`Address` 类型是原始 `b256` 类型的类型安全封装。与 EVM 不同，地址 **永远不会** 指代已部署的智能合约（参见下文的 `ContractId` 类型）。`Address` 可能是公钥的哈希值（如果你来自 EVM，则有效地是一个[外部拥有的账户](https://ethereum.org/en/whitepaper/#ethereum-accounts)），也可能是 [谓词](../sway-program-types/predicates.md) 的哈希值。地址拥有 UTXOs。
+`Address` 类型是原始 `b256` 类型的类型安全封装。与 EVM 不同，地址 **永远不会** 指代已部署的智能合约（参见下文的 `ContractId` 类型）。`Address` 可能是公钥的哈希值（如果你来自 EVM，则有效地是一个[外部拥有的账户](https://ethereum.org/en/whitepaper/#ethereum-accounts)），也可能是 [断言](../sway-program-types/predicates.md) 的哈希值。地址拥有 UTXOs。
 
 <!-- address:example:end -->
 

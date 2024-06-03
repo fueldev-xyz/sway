@@ -18,7 +18,7 @@
   - [合约](./sway-program-types/smart_contracts.md)
   - [库](./sway-program-types/libraries.md)
   - [脚本](./sway-program-types/scripts.md)
-  - [谓词](./sway-program-types/predicates.md)
+  - [断言](./sway-program-types/predicates.md)
 - [Sway 语言基础](./basics/index.md)
   - [变量](./basics/variables.md)
   - [内置类型](./basics/built_in_types.md)

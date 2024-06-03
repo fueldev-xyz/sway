@@ -25,7 +25,7 @@ Sway Libraries 的目的是包含用户可以导入并使用的库，这些库�
 
 密码学库是提供了超出 std-lib 范围的密码学功能的库。
 
-- [字节码库](https://fuellabs.github.io/sway-libs/book/bytecode/index.html); 用于在链上验证和计算合约和谓词的字节码根。
+- [字节码库](https://fuellabs.github.io/sway-libs/book/bytecode/index.html); 用于在链上验证和计算合约和断言的字节码根。
 - [默克尔证明库](https://fuellabs.github.io/sway-libs/book/merkle/index.html); 用于验证链下计算的二进制默克尔树。
 
 ## 数学库
