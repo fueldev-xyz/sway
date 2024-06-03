@@ -1,12 +1,10 @@
-# Testing
+# 测试
 
-Sway aims to provide facilities for both unit testing and integration testing.
+Sway 旨在提供单元测试和集成测试的设施。
 
-**Unit testing** refers to "in-language" test functions annotated with `#[test]`.
+**单元测试**是指用 `#[test]` 注解的“语言内”测试函数。
 
-**Integration testing** refers to the testing of your Sway project's integration
-within some wider application. You can add integration testing to your Sway+Rust
-projects today using the cargo generate template and Rust SDK.
+**集成测试**是指测试 Sway 项目在更广泛的应用程序中的集成。你可以使用 cargo generate 模板和 Rust SDK 将集成测试添加到你的 Sway+Rust 项目中。
 
-- [Unit Testing](./unit-testing.md)
-- [Testing with Rust](./testing-with-rust.md)
+- [单元测试](./unit-testing.md)
+- [使用 Rust 进行测试](./testing-with-rust.md)
