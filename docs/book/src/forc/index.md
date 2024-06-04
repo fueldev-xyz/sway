@@ -1,7 +1,7 @@
-# Forc Reference
+# Forc 参考
 
-Forc stands for Fuel Orchestrator. Forc provides a variety of tools and commands for developers working with the Fuel ecosystem, such as scaffolding a new project, formatting, running scripts, deploying contracts, testing contracts, and more. If you're coming from a Rust background, forc is similar to cargo.
+Forc 代表 Fuel Orchestrator。Forc 为在 Fuel 生态系统中工作的开发人员提供了各种工具和命令，例如搭建新项目、格式化、运行脚本、部署合约、测试合约等。如果你有 Rust 背景，Forc 类似于 cargo。
 
-If you are new to Forc, see the [Forc Project](https://docs.fuel.network/docs/sway/introduction/forc_project/) introduction section.
+如果你是 Forc 新手，请参阅 [Forc 项目](https://docs.fueldev.xyz/docs/sway/introduction/forc_project/) 介绍部分。
 
-For a comprehensive overview of the Forc CLI commands, see the [Commands](./commands/index.md) section.
+有关 Forc CLI 命令的全面概述，请参阅 [命令](./commands/index.md) 部分。
