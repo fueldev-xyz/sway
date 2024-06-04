@@ -6,12 +6,12 @@
 
 ## 标准
 
-### 本地资产标准
+### 原生资产标准
 
-- [SRC-20; 本地资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) 定义了使用 Sway 语言实现标准 API 的 [本地资产](../blockchain-development/native_assets.md)。
-- [SRC-3; 铸币和销毁](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 用于为本地资产启用铸币和销毁功能。
-- [SRC-7; 任意资产元数据标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 用于存储 [本地资产](../blockchain-development/native_assets.md) 的元数据，通常作为 NFT。
-- [SRC-9; 元数据键标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md) 用于与 SRC-7 标准结合使用，存储 [本地资产](../blockchain-development/native_assets.md) 的标准化元数据键。
+- [SRC-20; 原生资产标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) 定义了使用 Sway 语言实现标准 API 的 [原生资产](../blockchain-development/native_assets.md)。
+- [SRC-3; 铸币和销毁](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 用于为原生资产启用铸币和销毁功能。
+- [SRC-7; 任意资产元数据标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 用于存储 [原生资产](../blockchain-development/native_assets.md) 的元数据，通常作为 NFT。
+- [SRC-9; 元数据键标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md) 用于与 SRC-7 标准结合使用，存储 [原生资产](../blockchain-development/native_assets.md) 的标准化元数据键。
 - [SRC-6; 保险库标准](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-6.md) 定义了在 Sway 中开发的资产保险库的标准 API 的实现。
 
 ### 断言标准

@@ -36,7 +36,7 @@
   - [合约存储](./blockchain-development/storage.md)
   - [函数纯度](./blockchain-development/purity.md)
   - [标识符](./blockchain-development/identifiers.md)
-  - [本地资产](./blockchain-development/native_assets.md)
+  - [原生资产](./blockchain-development/native_assets.md)
   - [访问控制](./blockchain-development/access_control.md)
   - [调用合约](./blockchain-development/calling_contracts.md)
   - [外部代码](./blockchain-development/external_code.md)

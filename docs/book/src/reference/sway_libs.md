@@ -8,7 +8,7 @@ Sway Libraries 的目的是包含用户可以导入并使用的库，这些库�
 
 ## 资产库
 
-资产库是任何使用[本地资产](../blockchain-development/native_assets.md)在 Fuel Network 上的库。
+资产库是任何使用[原生资产](../blockchain-development/native_assets.md)在 Fuel Network 上的库。
 
 - [资产库](https://fuellabs.github.io/sway-libs/book/asset/index.html); 提供了 [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md)、[SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) 和 [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) 标准的辅助函数。
 

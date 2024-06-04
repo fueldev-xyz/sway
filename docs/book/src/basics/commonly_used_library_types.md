@@ -1,6 +1,6 @@
 # 常用的库类型
 
-Sway 标准库是可移植 Sway 软件的基础，是广泛的 Sway 生态系统的一组最小共享抽象。它提供了核心类型、对语言原语的库定义操作、本地资产管理、区块链上下文操作、访问控制、存储管理以及对其他 VM 类型的支持，等等。可以在[这里](https://fuellabs.github.io/sway/master/std/index.html)查看标准库文档。
+Sway 标准库是可移植 Sway 软件的基础，是广泛的 Sway 生态系统的一组最小共享抽象。它提供了核心类型、对语言原语的库定义操作、原生资产管理、区块链上下文操作、访问控制、存储管理以及对其他 VM 类型的支持，等等。可以在[这里](https://fuellabs.github.io/sway/master/std/index.html)查看标准库文档。
 
 ## `Result<T, E>`
 

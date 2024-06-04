@@ -8,7 +8,7 @@ Sway 从根本上说是一种区块链语言。因此，它具有一些你在通
 - [合约存储](./storage.md)
 - [函数纯度](./purity.md)
 - [标识符](./identifiers.md)
-- [本地资产](./native_assets.md)
+- [原生资产](./native_assets.md)
 - [访问控制](./access_control.md)
 - [调用合约](./calling_contracts.md)
 - [外部代码执行](./external_code.md)

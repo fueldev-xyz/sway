@@ -6,10 +6,10 @@
 
 - [空投](https://github.com/FuelLabs/sway-applications/tree/master/airdrop) 是一个资产分发程序，用户可以根据有效的 Merkle 证明领取资产。
 - [托管](https://github.com/FuelLabs/sway-applications/tree/master/escrow) 是一个第三方，代表多方保管资产。
-- [非同质化本地资产 (NFT)](https://github.com/FuelLabs/sway-applications/tree/master/NFT) 是一个资产合约，提供了唯一的可收集物，通过 ID 进行识别和区分，其中资产包含元数据，赋予它们独特的特征。
+- [非同质化原生资产 (NFT)](https://github.com/FuelLabs/sway-applications/tree/master/NFT) 是一个资产合约，提供了唯一的可收集物，通过 ID 进行识别和区分，其中资产包含元数据，赋予它们独特的特征。
 - [分数化非同质化代币 (F-NFT)](https://github.com/FuelLabs/sway-applications/tree/master/fractional-NFT) 是一个代币合约，当将 NFT 锁定到保险库时，发行股份或部分所有权。
 - [时间锁](https://github.com/FuelLabs/sway-applications/tree/master/timelock) 是一个约束交易执行到指定时间范围的合约。
-- [本地资产](https://github.com/FuelLabs/sway-applications/tree/master/native-asset) 是一个基本资产合约，使用现有的标准和库在 Fuel 上启用了本地资产的使用。
+- [原生资产](https://github.com/FuelLabs/sway-applications/tree/master/native-asset) 是一个基本资产合约，使用现有的标准和库在 Fuel 上启用了原生资产的使用。
 
 ## 去中心化金融
 
