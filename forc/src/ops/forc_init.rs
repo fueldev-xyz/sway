@@ -17,10 +17,10 @@ enum InitType {
 fn print_welcome_message() {
     let read_the_docs = format!(
         "Read the Docs:\n- {}\n- {}\n- {}\n- {}",
-        "Sway Book: https://docs.fuel.network/docs/sway",
-        "Forc Book: https://docs.fuel.network/docs/forc",
-        "Rust SDK Book: https://docs.fuel.network/docs/fuels-rs",
-        "TypeScript SDK: https://docs.fuel.network/docs/fuels-ts"
+        "Sway Book: https://docs.fueldev.xyz/docs/sway",
+        "Forc Book: https://docs.fueldev.xyz/docs/forc",
+        "Rust SDK Book: https://docs.fueldev.xyz/docs/fuels-rs",
+        "TypeScript SDK: https://docs.fueldev.xyz/docs/fuels-ts"
     );
 
     let join_the_community = format!(

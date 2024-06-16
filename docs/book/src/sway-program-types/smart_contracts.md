@@ -76,7 +76,7 @@
 
 ## 从脚本调用智能合约
 
-> **注意**: 在大多数情况下，调用合约应该使用[Rust SDK](../testing/testing-with-rust.md)或[TypeScript SDK](https://docs.fuel.network/docs/fuels-ts)，因为它们为与合约交互提供了更人性化的界面。然而，有些情况下需要手动编写脚本来调用合约。
+> **注意**: 在大多数情况下，调用合约应该使用[Rust SDK](../testing/testing-with-rust.md)或[TypeScript SDK](https://docs.fueldev.xyz/docs/fuels-ts)，因为它们为与合约交互提供了更人性化的界面。然而，有些情况下需要手动编写脚本来调用合约。
 
 既然我们已经为合约定义了接口并实现了它，我们需要知道如何实际*调用*我们的合约。让我们看一下合约调用：
 

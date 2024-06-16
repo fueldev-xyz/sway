@@ -4,7 +4,7 @@
 
 **问：Hi！什么是 Sway？**
 
-Sway 是一种领域特定的编程语言，用于在区块链平台上实现智能合约，尤其是为[Fuel 虚拟机（Fuel VM）](https://docs.fuel.network/docs/specs/fuel-vm/)设计的。
+Sway 是一种领域特定的编程语言，用于在区块链平台上实现智能合约，尤其是为[Fuel 虚拟机（Fuel VM）](https://docs.fueldev.xyz/docs/specs/fuel-vm/)设计的。
 
 受到[Rust](https://doc.rust-lang.org/book/)的系统编程方法的启发，Sway 旨在将现代编程语言特性和工具带入智能合约开发，同时保持性能、精细控制，并广泛使用静态分析来防止常见的安全问题。
 
@@ -42,7 +42,7 @@ Sway 试图为智能合约开发人员带来 Rust 的所有其他优势，包括
 
 **问：我需要安装什么吗？**
 
-如果您想在本地环境中使用 Sway 进行开发，您需要安装[`fuelup`](https://docs.fuel.network/guides/installation/)和支持 LSP 的编辑器，如[VSCode](https://code.visualstudio.com/)。
+如果您想在本地环境中使用 Sway 进行开发，您需要安装[`fuelup`](https://docs.fueldev.xyz/guides/installation/)和支持 LSP 的编辑器，如[VSCode](https://code.visualstudio.com/)。
 
 如果您现在不想安装任何东西，可以使用[Sway Playground](https://www.sway-playground.org/)来编辑、编译和部署 Sway 代码。
 
@@ -68,11 +68,11 @@ Sway 有多个本机资产。要铸造新的本机资产，请查看[本机资�
 
 **问：如何测试 Sway 代码？**
 
-Sway 提供[单元测试](./testing/unit-testing.md)，因此您可以使用 Sway 测试您的 Sway 代码。您还可以使用 Fuel 的[Rust SDK](https://docs.fuel.network/docs/fuels-rs/testing/)或[TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/testing/)测试您的 Sway 程序。
+Sway 提供[单元测试](./testing/unit-testing.md)，因此您可以使用 Sway 测试您的 Sway 代码。您还可以使用 Fuel 的[Rust SDK](https://docs.fueldev.xyz/docs/fuels-rs/testing/)或[TypeScript SDK](https://docs.fueldev.xyz/docs/fuels-ts/testing/)测试您的 Sway 程序。
 
 **问：如何部署合约？**
 
-您可以使用`forc deploy`命令部署合约。有关如何部署合约的详细指南，请参阅[快速入门指南](https://docs.fuel.network/docs/intro/quickstart-contract/)。
+您可以使用`forc deploy`命令部署合约。有关如何部署合约的详细指南，请参阅[快速入门指南](https://docs.fueldev.xyz/docs/intro/quickstart-contract/)。
 
 **问：是否有将 Solidity 代码转换为 Sway 的方法？**
 
@@ -84,6 +84,6 @@ Sway 提供[单元测试](./testing/unit-testing.md)，因此您可以使用 Swa
 
 **问：应该从哪里开始？**
 
-_准备构建？_ 您可以在[Fuel 开发者指南](https://docs.fuel.network/guides/)中找到如何使用 Sway 构建应用程序的分步指南。
+_准备构建？_ 您可以在[Fuel 开发者指南](https://docs.fueldev.xyz/guides/)中找到如何使用 Sway 构建应用程序的分步指南。
 
 _想阅读？_ 请从本书的[介绍](./introduction/index.md)和[基础](./basics/index.md)部分开始阅读。
